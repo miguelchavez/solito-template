@@ -14,12 +14,6 @@ import * as SplashScreen from 'expo-splash-screen'
 import { Stack } from 'expo-router/stack'
 
 // import { Provider } from 'app/provider'
-import { useFirebaseAuth } from '@auth/firebase/hooks'
-import {
-    signInWithEmailAndPassword,
-    signInAnonymously,
-    onAuthStateChanged,
-} from '@auth/firebase/index.native' // esto es correcto?
 
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
@@ -42,15 +36,8 @@ export default function App() {
         InterItalic: require('../assets/fonts/Inter-Italic-VariableFont.ttf'),
     })
 
-    const auth = useFirebaseAuth()
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [isAuthenticating, setIsAuthenticating] = useState(false)
-
     useEffect(() => {
-        if (
-            (interLoaded && interError) ||
-            (isAuthenticated && !isAuthenticating)
-        ) {
+        if (interLoaded && interError) {
             // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
             const hideSplashScreen = async () => {
                 // https://docs.expo.dev/versions/latest/sdk/splash-screen/
@@ -60,38 +47,9 @@ export default function App() {
             }
             hideSplashScreen()
         }
-    }, [interLoaded, interError, isAuthenticated, isAuthenticating])
+    }, [interLoaded, interError])
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(() => {
-            if (auth) {
-                console.log('[ @layout :: AUTHENTICATED ]:', auth)
-                setIsAuthenticated(true)
-                setIsAuthenticating(false)
-            } else {
-                setIsAuthenticated(false)
-                if (!isAuthenticating) setIsAuthenticating(false)
-            }
-        })
-
-        return () => unsubscribe()
-    }, [auth])
-
-    if ((!interLoaded && !interError) || !isAuthenticated) {
-        if (!isAuthenticating) {
-            setIsAuthenticating(true)
-            signInAnonymously()
-                .then((result) => {
-                    console.log('[ @layout :: SIGN IN RESULT ]:', result)
-                })
-                .catch((error) => {
-                    console.error('[ @layout :: SIGN IN ERROR ]:', error)
-                })
-            // FIXME: signInWithGoogle() usa signInWithProvider que no funciona en native!
-            // signInWithGoogle().then((result) => {
-            //     console.log('[ @layout :: SIGN IN RESULT ]:', result)
-            // })
-        }
+    if (!interLoaded && !interError) {
         return null
     }
 

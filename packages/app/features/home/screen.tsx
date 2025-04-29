@@ -3,8 +3,6 @@ import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti/app'
 import { Text, View, StyleSheet, useWindowDimensions } from 'react-native'
 
-import { getCurrentUser } from 'app/auth/firebase'
-
 export function HomeScreen() {
     const { width, height } = useWindowDimensions()
     const styles = StyleSheet.create({
@@ -17,19 +15,10 @@ export function HomeScreen() {
         },
     })
 
-    const user = getCurrentUser()
-
     return (
         <View style={styles.view}>
-            <H1>
-                Bienvenido usuario{' '}
-                {user?.isAnonymous ? 'Invitado' : user?.displayName}
-            </H1>
+            <H1>Welcome to Solito Template</H1>
             <View style={{ maxWidth: 600, gap: 16 }}>
-                <Text style={{ fontFamily: 'Inter', textAlign: 'justify' }}>
-                    Tu id es: {user?.uid}. Tu ultima sesion es de{' '}
-                    {user?.metadata?.lastSignInTime}
-                </Text>
                 <Text style={{ fontFamily: 'Inter', textAlign: 'center' }}>
                     Solito is made by{' '}
                     <MotiLink

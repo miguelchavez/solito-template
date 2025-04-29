@@ -1,7 +1,5 @@
 {
     "dependencies": {
-        "@react-native-firebase/app": "^22.0.0",
-        "@react-native-firebase/auth": "^22.0.0",
         "@shopify/flash-list": "1.7.3",
         "app": "*",
         "expo": "52.0.38",

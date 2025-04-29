@@ -25,8 +25,7 @@
             "@core/*": ["../../packages/app/core/*"],
             "@infra/*": ["../../packages/app/infrastructure/*"],
             "@repositories/*": ["../../packages/app/repositories/*"],
-            "@utils/*": ["../../packages/app/utils/*"],
-            "@auth/*": ["../../packages/app/auth/*"]
+            "@utils/*": ["../../packages/app/utils/*"]
         }
     },
     "include": [

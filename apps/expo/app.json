@@ -12,7 +12,6 @@
         "assetBundlePatterns": ["**/*"],
         "ios": {
             "bundleIdentifier": "com.example.solito-template",
-            "googleServicesFile": "./GoogleService-Info.plist",
             "supportsTablet": true,
             "userInterfaceStyle": "automatic",
             "backgroundColor": "#ffffff"

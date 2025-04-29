@@ -1,5 +1,4 @@
 import { StylesProvider } from './styles-provider'
-import AuthLayout from '../components/authLayout'
 import './globals.css'
 
 export const metadata = {
@@ -15,9 +14,7 @@ export default function RootLayout({
     return (
         <html lang="es">
             <body>
-                <StylesProvider>
-                    <AuthLayout>{children}</AuthLayout>
-                </StylesProvider>
+                <StylesProvider>{children}</StylesProvider>
             </body>
         </html>
     )
