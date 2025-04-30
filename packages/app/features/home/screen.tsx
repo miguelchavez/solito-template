@@ -1,5 +1,5 @@
 'use client'
-import { TextLink } from 'solito/link' // On next.js 15 it creates a
+import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti/app'
 import { Text, View, StyleSheet, useWindowDimensions } from 'react-native'
 
