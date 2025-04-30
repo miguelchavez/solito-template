@@ -1,5 +1,5 @@
 'use client'
-import { TextLink } from 'solito/link'
+import { TextLink } from 'solito/link' // On next.js 15 it creates a
 import { MotiLink } from 'solito/moti/app'
 import { Text, View, StyleSheet, useWindowDimensions } from 'react-native'
 
@@ -32,42 +32,14 @@ export function HomeScreen() {
                 </Text>
                 <Text style={{ fontFamily: 'Inter', textAlign: 'center' }}>
                     Solito is made by{' '}
-                    <MotiLink
+                    <TextLink
                         href="https://twitter.com/fernandotherojo"
-                        from={{
-                            scale: 0,
-                            rotateZ: '0deg',
-                        }}
-                        animate={({ hovered, pressed }) => {
-                            'worklet'
-
-                            return {
-                                scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-                                rotateZ: pressed
-                                    ? '0deg'
-                                    : hovered
-                                    ? '-3deg'
-                                    : '0deg',
-                            }
-                        }}
-                        transition={{
-                            type: 'timing',
-                            duration: 150,
-                        }}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ color: 'blue' }}
                     >
-                        <Text
-                            selectable={false}
-                            style={{
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                                color: 'blue',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Fernando Rojo
-                        </Text>
-                    </MotiLink>
-                    .
+                        Fernando Rojo
+                    </TextLink>
                 </Text>
             </View>
             <View style={{ flexDirection: 'row', gap: 32 }}>

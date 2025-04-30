@@ -51,14 +51,7 @@ export default function App() {
             (interLoaded && interError) ||
             (isAuthenticated && !isAuthenticating)
         ) {
-            // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
-            const hideSplashScreen = async () => {
-                // https://docs.expo.dev/versions/latest/sdk/splash-screen/
-                await new Promise((resolve) => setTimeout(resolve, 1000))
-                console.log('hiding splash screen')
-                SplashScreen.hideAsync()
-            }
-            hideSplashScreen()
+            SplashScreen.hideAsync()
         }
     }, [interLoaded, interError, isAuthenticated, isAuthenticating])
 

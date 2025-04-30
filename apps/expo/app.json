@@ -10,19 +10,19 @@
         "userInterfaceStyle": "automatic",
         "backgroundColor": "#ffffff",
         "assetBundlePatterns": ["**/*"],
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.example.solitotemplate"
+        },
         "ios": {
             "bundleIdentifier": "com.example.solito-template",
             "googleServicesFile": "./GoogleService-Info.plist",
             "supportsTablet": true,
             "userInterfaceStyle": "automatic",
             "backgroundColor": "#ffffff"
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/images/adaptive-icon.png",
-                "backgroundColor": "#ffffff"
-            },
-            "package": "com.example.solito-template"
         },
         "web": {
             "bundler": "metro",
@@ -37,6 +37,8 @@
         "plugins": [
             "expo-router",
             "expo-font",
+            "@react-native-firebase/app",
+            "@react-native-firebase/auth",
             [
                 "expo-splash-screen",
                 {
@@ -52,7 +54,14 @@
                     "launchMode": "most-recent"
                 }
             ],
-            "expo-build-properties"
+            [
+                "expo-build-properties",
+                {
+                    "ios": {
+                        "useFrameworks": "static"
+                    }
+                }
+            ]
         ],
         "extra": {
             "router": {
