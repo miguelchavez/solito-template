@@ -1,5 +1,5 @@
 /**
- * Entry point for the alfred app.
+ * Entry point for the app.
  */
 import { useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
