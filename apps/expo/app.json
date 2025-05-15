@@ -3,16 +3,16 @@
         "name": "Solito-Template",
         "slug": "Solito-Template",
         "version": "1.0.0",
-        "scheme": "Solito-Template",
+        "scheme": "solito-template",
         "platforms": ["ios", "android"],
         "orientation": "default",
-        "icon": "./assets/images/icon.png",
+        "icon": "../../packages/app/assets/images/icon.png",
         "userInterfaceStyle": "automatic",
         "backgroundColor": "#ffffff",
         "assetBundlePatterns": ["**/*"],
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "foregroundImage": "../../packages/app/assets/images/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
             },
             "package": "com.example.solitotemplate",
@@ -28,7 +28,7 @@
         "web": {
             "bundler": "metro",
             "output": "static",
-            "favicon": "./assets/images/favicon.png"
+            "favicon": "../../packages/app/assets/images/favicon.png"
         },
         "newArchEnabled": true,
         "experiments": {
@@ -43,7 +43,7 @@
             [
                 "expo-splash-screen",
                 {
-                    "image": "./assets/images/splash.png",
+                    "image": "../../packages/app/assets/images/splash.png",
                     "imageWidth": 200,
                     "resizeMode": "contain",
                     "backgroundColor": "#ffffff"

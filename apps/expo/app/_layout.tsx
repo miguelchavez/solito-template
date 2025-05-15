@@ -36,8 +36,8 @@ SplashScreen.setOptions({
 export default function App() {
     const auth = useFirebaseAuth()
     const [interLoaded, interError] = useFonts({
-        Inter: require('../assets/fonts/Inter-VariableFont.ttf'),
-        InterItalic: require('../assets/fonts/Inter-Italic-VariableFont.ttf'),
+        Inter: require('@assets/fonts/Inter-VariableFont.ttf'),
+        InterItalic: require('@assets/fonts/Inter-Italic-VariableFont.ttf'),
     })
     const router = useRouter()
 
