@@ -19,11 +19,24 @@ It is organized in different branches, containing each one a set of libraries fo
 
 -   `solito` for cross-platform navigation
 -   `moti` for animations
--   Expo SDK 53
+-   Expo SDK 52
 -   Next.js 15
 -   React Navigation 7
 -   React 19 (read more below)
 -   React Compiler
+
+## Components / Libraries
+
+-   Firebase / react-native-firebase
+-   Firebase Auth with Providers in NATIVE
+-   Expo SecureStore for storing auth tokens in native
+-   date-fns
+-   @shopify/flash-list
+-   expo-blur
+-   expo-device
+-   expo-font
+-   expo-haptics
+-   expo-symbols
 
 For more, see the [compatibility docs](https://solito.dev/compatibility).
 

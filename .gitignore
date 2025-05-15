@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+apps/expo/GoogleService-Info.plist
+apps/expo/google-services.json
+
 # Xcode
 #
 build/

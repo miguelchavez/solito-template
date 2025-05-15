@@ -4,11 +4,15 @@
         "noUncheckedIndexedAccess": true,
         "paths": {
             "app/*": ["./packages/app/*"],
+            // "@assets/*": ["./apps/expo/assets/*"],
+            "@assets/*": ["./packages/app/assets/*"],
             "@core/*": ["./packages/app/core/*"],
             "@infra/*": ["./packages/app/infrastructure/*"],
             "@repositories/*": ["./packages/app/repositories/*"],
             "@utils/*": ["./packages/app/utils/*"],
-            "@auth/*": ["./packages/app/auth/*"]
+            "@hooks/*": ["./packages/app/hooks/*"],
+            "@auth/*": ["./packages/app/auth/*"],
+            "@components/*": ["./apps/expo/components/*"]
         },
         "baseUrl": ".",
         "jsx": "react-jsx"

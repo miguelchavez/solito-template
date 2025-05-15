@@ -1,50 +1,80 @@
 'use client'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti/app'
-import { Text, View, StyleSheet, useWindowDimensions } from 'react-native'
+import {
+    Text,
+    Button,
+    View,
+    StyleSheet,
+    useWindowDimensions,
+} from 'react-native'
 
+import { useState, useEffect } from 'react'
 import { getCurrentUser } from 'app/auth/firebase'
+import { useRouter } from 'solito/router'
+
+import { useThemeColor } from '@hooks/useThemeColor'
+
+import { es } from 'date-fns/locale'
+import { formatDistanceToNow } from 'date-fns'
 
 export function HomeScreen() {
+    const router = useRouter()
     const { width, height } = useWindowDimensions()
+    const bgColor = useThemeColor('background')
+    const textColor = useThemeColor('text')
+    const linkColor = useThemeColor('tertiary')
+    const [timeAgo, setTimeAgo] = useState('')
+
     const styles = StyleSheet.create({
         view: {
             flex: 1,
             padding: 16,
-            paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
+            // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
             gap: 32,
-            backgroundColor: '#fff', // #D4C4F4  #FF85FF #CFB8FC #DAB8FC
+            backgroundColor: bgColor,
+            color: textColor,
         },
     })
 
     const user = getCurrentUser()
 
+    useEffect(() => {
+        if (user) {
+            // console.log('[ auth :: data ]:', user)
+            const f = formatDistanceToNow(
+                new Date(user.metadata.lastSignInTime ?? ''),
+                {
+                    addSuffix: true,
+                    locale: es,
+                },
+            )
+            setTimeAgo(f)
+        }
+    }, [])
+
     return (
         <View style={styles.view}>
-            <H1>
-                Bienvenido usuario{' '}
-                {user?.isAnonymous ? 'Invitado' : user?.displayName}
-            </H1>
-            <View style={{ maxWidth: 600, gap: 16 }}>
-                <Text style={{ fontFamily: 'Inter', textAlign: 'justify' }}>
-                    Tu id es: {user?.uid}. Tu ultima sesion es de{' '}
-                    {user?.metadata?.lastSignInTime}
-                </Text>
-                <Text style={{ fontFamily: 'Inter', textAlign: 'center' }}>
+            <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
+            <View style={{ gap: 16 }}>
+                <P style={{ color: '#000' }}>
+                    Your last session is from {timeAgo}
+                </P>
+                <P>
                     Solito is made by{' '}
                     <TextLink
                         href="https://twitter.com/fernandotherojo"
                         target="_blank"
                         rel="noreferrer"
-                        style={{ color: 'blue' }}
+                        style={{ color: linkColor }}
                     >
                         Fernando Rojo
                     </TextLink>
-                </Text>
+                </P>
             </View>
-            <View style={{ flexDirection: 'row', gap: 32 }}>
+            <View style={{ flexDirection: 'row', gap: 16 }}>
                 <MotiLink
-                    href="/user/fernando"
+                    href="/(tabs)/profile"
                     from={{
                         scale: 0,
                         rotateZ: '0deg',
@@ -66,70 +96,58 @@ export function HomeScreen() {
                         duration: 150,
                     }}
                 >
-                    <Text
-                        selectable={false}
-                        style={{
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                            color: 'blue',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        Get User Info
-                    </Text>
+                    <P selectable={false}>View Profile</P>
                 </MotiLink>
-
-                <MotiLink
-                    href="/more"
-                    from={{
-                        scale: 0,
-                        rotateZ: '0deg',
-                    }}
-                    animate={({ hovered, pressed }) => {
-                        'worklet'
-
-                        return {
-                            scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-                            rotateZ: pressed
-                                ? '0deg'
-                                : hovered
-                                ? '-3deg'
-                                : '0deg',
-                        }
-                    }}
-                    transition={{
-                        type: 'timing',
-                        duration: 150,
-                    }}
-                >
-                    <Text
-                        selectable={false}
-                        style={{
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                            color: 'black',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        Moti Link
-                    </Text>
-                </MotiLink>
+                <Button
+                    title="Open Modal"
+                    onPress={() => router.push('/(modals)/exampleModal')}
+                />
             </View>
         </View>
     )
 }
 
 const H1 = ({ children }: { children: React.ReactNode }) => {
+    const textColor = useThemeColor('text')
     return (
-        <Text style={{ fontFamily: 'Inter', fontWeight: '800', fontSize: 24 }}>
+        <Text
+            style={{
+                color: textColor,
+                textAlign: 'center',
+                fontFamily: 'Inter',
+                fontWeight: '800',
+                fontSize: 26,
+            }}
+        >
             {children}
         </Text>
     )
 }
 
-const P = ({ children }: { children: React.ReactNode }) => {
+const P = ({
+    children,
+    style,
+    selectable,
+    props,
+}: {
+    children: React.ReactNode
+    props?: any
+    style?: any
+    selectable?: boolean
+}) => {
+    const linkColor = useThemeColor('secondary')
     return (
-        <Text style={{ fontFamily: 'Inter', textAlign: 'center' }}>
+        <Text
+            selectable={selectable}
+            style={{
+                fontFamily: 'Inter',
+                textAlign: 'justify',
+                color: linkColor,
+                fontSize: 18,
+                ...style,
+            }}
+            {...props}
+        >
             {children}
         </Text>
     )
