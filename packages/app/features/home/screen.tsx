@@ -11,7 +11,7 @@ import {
 
 import { useState, useEffect } from 'react'
 import { getCurrentUser } from 'app/auth/firebase'
-import { useRouter } from 'solito/router'
+import { useRouter } from 'solito/navigation'
 
 import { useThemeColor } from '@hooks/useThemeColor'
 

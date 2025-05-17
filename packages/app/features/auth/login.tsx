@@ -20,7 +20,7 @@ import {
     onAuthStateChanged,
 } from '@auth/firebase/index.native' // esto es correcto?
 
-import { useRouter } from 'solito/router'
+import { useRouter } from 'solito/navigation'
 
 import { useThemeColor } from '@hooks/useThemeColor'
 
