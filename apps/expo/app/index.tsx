@@ -115,15 +115,15 @@ export default function Home() {
         },
     })
 
-    // const handleSettingsUpdate = (accepting: string) => {
-    //     // This updates de context and saves it to AsyncStorage
-    //     updateSettings({
-    //         theme: settings.theme,
-    //         bottomTabBarSize: settings.bottomTabBarSize,
-    //         isAgreementAccepted: accepting, // update this value
-    //     })
-    //     router.push('/(tabs)/home')
-    // }
+    const handleSettingsUpdate = (accepting: string) => {
+        // This updates de context and saves it to AsyncStorage
+        updateSettings({
+            theme: settings.theme,
+            bottomTabBarSize: settings.bottomTabBarSize,
+            isAgreementAccepted: accepting, // update this value
+        })
+        router.push('/(tabs)/home')
+    }
 
     useEffect(() => {
         if (settings && settings.isAgreementAccepted) {
