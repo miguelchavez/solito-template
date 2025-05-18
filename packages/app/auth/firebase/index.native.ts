@@ -8,6 +8,7 @@ import {
     signInAnonymously as signInAnonymouslyFirebase,
     signInWithPopup,
     onAuthStateChanged as onAuthStateChangedFirebase,
+    sendPasswordResetEmail as sendPasswordResetEmailFirebase,
 } from '@react-native-firebase/auth'
 
 const auth = getAuth()
@@ -76,6 +77,10 @@ const onAuthStateChanged = (callback) =>
 
 const getCurrentUser = () => auth?.currentUser
 
+const sendPasswordResetEmail = (userEmail: string) => {
+    return sendPasswordResetEmailFirebase(auth, userEmail)
+}
+
 export {
     getIsSignedIn,
     signOut,
@@ -86,4 +91,5 @@ export {
     // signInWithMicrosoft,
     onAuthStateChanged,
     getCurrentUser,
+    sendPasswordResetEmail,
 }

@@ -14,6 +14,7 @@ import {
     onAuthStateChanged as onAuthStateChangedFirebase,
     GoogleAuthProvider,
     OAuthProvider,
+    sendPasswordResetEmail as sendPasswordResetEmailFirebase,
 } from 'firebase/auth'
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -175,6 +176,10 @@ const onAuthStateChanged = (callback) => {
 
 const getCurrentUser = () => auth?.currentUser
 
+const sendPasswordResetEmail = (userEmail: string) => {
+    return sendPasswordResetEmailFirebase(auth, userEmail)
+}
+
 export {
     getIsSignedIn,
     signInAnonymously,
@@ -185,4 +190,5 @@ export {
     signOut,
     onAuthStateChanged,
     getCurrentUser,
+    sendPasswordResetEmail,
 }

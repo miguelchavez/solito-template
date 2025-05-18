@@ -16,9 +16,10 @@ import {
 import { useFirebaseAuth } from '@auth/firebase/hooks'
 import {
     signInWithEmailAndPassword,
+    sendPasswordResetEmail,
     signInAnonymously,
     onAuthStateChanged,
-} from '@auth/firebase/index.native' // esto es correcto?
+} from '@auth/firebase/'
 
 import { useRouter } from 'solito/navigation'
 
@@ -129,12 +130,29 @@ export default function LoginScreen() {
                     // const { token, user } = userCredential
                 })
                 .catch((error) => {
-                    const errorCode = error.code
+                    // const errorCode = error.code
                     const errorMessage = error.message
-                    console.error('Error signing in:', errorCode, errorMessage)
+                    alert(`Error signing in: ${errorMessage}`)
                 })
         } else {
             alert('Please enter email and password')
+        }
+    }
+
+    const handleSendPasswordReset = (email: string) => {
+        if (email) {
+            sendPasswordResetEmail(email)
+                .then(() => {
+                    alert(`The password reset link was sent, check your email.`)
+                })
+                .catch((e) => {
+                    const errorMessage = e.message
+                    alert(`Error sending password reset email: ${errorMessage}`)
+                })
+        } else {
+            alert(
+                'Please enter email address for sending the reset password link',
+            )
         }
     }
 
@@ -206,8 +224,8 @@ export default function LoginScreen() {
                     <Text style={styles.buttonText}>Forgot Password ?</Text>
                 </TouchableOpacity> */}
                 <Button
-                    title="Forgot Password"
-                    onPress={() => router.push('/(modals)/exampleModal')}
+                    title="Forgot Password ?"
+                    onPress={() => handleSendPasswordReset(email)}
                 />
             </KeyboardAvoidingView>
         </View>
