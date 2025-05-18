@@ -27,7 +27,7 @@ const menuTitleColorDark = '#cfcfcf' // #cfcfcf
 
 export const Colors = {
     light: {
-        primary: '#890253',
+        primary: '#890253', // #875ef8 #f632af #f7edfe
         secondary: '#0E7AFE', // apple blue
         tertiary: '#FF5A5F',
         text: '#11181C',

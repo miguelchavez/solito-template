@@ -5,9 +5,11 @@ import { BlurView } from 'expo-blur'
 import { HomeScreen } from 'app/features/home/screen'
 import { useThemeColor } from '@hooks/useThemeColor'
 // import { useParams } from 'solito/navigation'
+import { Redirect } from 'expo-router'
+import { getCurrentUser } from 'app/auth/firebase'
 
 export default function Home() {
-    // const insets = useSafeAreaInsets()
+    const currentUser = getCurrentUser()
     const bgColor = useThemeColor('background')
     const styles = StyleSheet.create({
         view: {
@@ -21,6 +23,11 @@ export default function Home() {
             // fontFamily: 'Inter',
         },
     })
+
+    if (!currentUser) {
+        return <Redirect href="/(auth)/login" />
+    }
+
     return (
         <SafeAreaView style={styles.view}>
             <HomeScreen />

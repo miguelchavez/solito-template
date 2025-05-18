@@ -1,12 +1,15 @@
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { View, StyleSheet } from 'react-native'
 // import { useParams } from 'solito/navigation'
+import { Redirect } from 'expo-router'
+import { getCurrentUser } from 'app/auth/firebase'
 
 import { ProfileScreen } from 'app/features/profile/screen'
 import { useThemeColor } from '@hooks/useThemeColor'
 
 export default function Profile() {
     const insets = useSafeAreaInsets()
+    const currentUser = getCurrentUser()
     const bgColor = useThemeColor('background')
     const styles = StyleSheet.create({
         container: {
@@ -23,6 +26,11 @@ export default function Profile() {
             // fontFamily: 'Inter',
         },
     })
+
+    if (!currentUser) {
+        return <Redirect href="/(auth)/login" />
+    }
+
     return (
         <View style={styles.view}>
             <ProfileScreen />

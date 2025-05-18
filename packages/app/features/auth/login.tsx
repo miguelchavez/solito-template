@@ -145,10 +145,19 @@ export default function LoginScreen() {
         if (auth && auth?.email) {
             setTimeout(() => {
                 // This is due to an error about navigation object not initializaed
-                router.push('/(tabs)/home')
+                router.replace('/(tabs)/home')
             }, 500)
         }
     }, [])
+
+    useEffect(() => {
+        if (auth && auth?.email) {
+            setTimeout(() => {
+                // This is due to an error about navigation object not initializaed
+                router.replace('/(tabs)/home')
+            }, 500)
+        }
+    }, [auth])
 
     return (
         <View style={styles.container}>

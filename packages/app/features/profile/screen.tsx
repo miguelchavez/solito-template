@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import { SymbolView } from 'expo-symbols'
 import * as Device from 'expo-device'
-import { getCurrentUser } from 'app/auth/firebase'
+import { getCurrentUser, signOut } from 'app/auth/firebase'
 
 import { useThemeColor } from '@hooks/useThemeColor'
 
@@ -216,7 +216,6 @@ export function ProfileScreen() {
             device !== undefined &&
             darkmode !== undefined
         if (updateTheme || updateTabBarSize) {
-            // console.log('CONFIG CHANGED -- updateSettings')
             updateSettings({
                 theme: newTheme,
                 bottomTabBarSize: bigIcons ? 'large' : 'small',
@@ -231,7 +230,6 @@ export function ProfileScreen() {
     }, [bigIcons, darkmode, device])
 
     useEffect(() => {
-        // console.log('Settings Screen :: settings from context:', settings)
         if (settings) {
             // update state from settings
             const isBigIcons = settings?.bottomTabBarSize === 'large'
@@ -245,7 +243,7 @@ export function ProfileScreen() {
 
     useEffect(() => {
         if (user) {
-            // console.log('[ auth :: data ]:', user)
+            console.log('[ auth :: data ]:', user)
             const f = formatDistanceToNow(
                 new Date(user.metadata.lastSignInTime ?? ''),
                 {
@@ -527,7 +525,7 @@ export function ProfileScreen() {
                         >
                             <TouchableOpacity
                                 onPress={() => {
-                                    // handle onPress
+                                    signOut()
                                 }}
                                 style={styles.row}
                             >

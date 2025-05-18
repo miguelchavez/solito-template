@@ -16,7 +16,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { useRouter } from 'solito/navigation'
 
 import { useFirebaseAuth } from '@auth/firebase/hooks'
-import { onAuthStateChanged } from '@auth/firebase/index.native' // esto es correcto?
+import { getCurrentUser, onAuthStateChanged } from '@auth/firebase'
 
 import { SettingsProvider } from 'app/providers/settingsContextProvider'
 
@@ -45,17 +45,30 @@ export default function App() {
      * When Authentication state changes, navigate to (tabs) home screen
      */
     useEffect(() => {
+        if (auth) {
+            setTimeout(() => {
+                // This is due to an error about navigation object not initializaed
+                router.replace('/(tabs)/home')
+            }, 500)
+        } else {
+            router.replace('/(auth)/login')
+        }
+    }, [auth])
+
+    useEffect(() => {
         const unsubscribe = onAuthStateChanged(() => {
             if (auth) {
                 setTimeout(() => {
                     // This is due to an error about navigation object not initializaed
-                    router.push('/(tabs)/home')
+                    router.replace('/(tabs)/home')
                 }, 500)
+            } else {
+                router.replace('/(auth)/login')
             }
         })
 
         return () => unsubscribe()
-    }, [auth])
+    }, [])
 
     useEffect(() => {
         if (interLoaded && !interError) {
@@ -69,6 +82,8 @@ export default function App() {
 
 function RootLayout() {
     const colorScheme = useColorScheme()
+    const auth = useFirebaseAuth()
+    const isLogedIn = typeof auth !== 'undefined' && auth != null
     return (
         <SafeAreaProvider /* initialMetrics={initialWindowMetrics} */>
             {/* Optimization: If you can, use SafeAreaView. It's implemented natively so when rotating the device, 
@@ -87,6 +102,17 @@ function RootLayout() {
                             gestureEnabled: false,
                         }}
                     >
+                        {/* Tabs Stack */}
+                        <Stack.Protected guard={isLogedIn}>
+                            <Stack.Screen
+                                name="(tabs)"
+                                options={{
+                                    headerShown: false,
+                                    gestureEnabled: false, // Disable swipe gestures for tab screens
+                                    animation: 'slide_from_bottom',
+                                }}
+                            />
+                        </Stack.Protected>
                         {/* Auth Stack */}
                         <Stack.Screen
                             name="(auth)"
@@ -94,16 +120,6 @@ function RootLayout() {
                                 headerShown: false,
                                 animation: 'fade',
                                 //gestureEnabled: false // Uncomment to disable swipe gestures for auth screens
-                            }}
-                        />
-
-                        {/* Tabs Stack */}
-                        <Stack.Screen
-                            name="(tabs)"
-                            options={{
-                                headerShown: false,
-                                gestureEnabled: false, // Disable swipe gestures for tab screens
-                                animation: 'slide_from_bottom',
                             }}
                         />
                     </Stack>

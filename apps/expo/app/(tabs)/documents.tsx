@@ -4,8 +4,11 @@ import { View, StyleSheet } from 'react-native'
 import { DocumentsScreen } from 'app/features/documents/screen'
 import { useThemeColor } from '@hooks/useThemeColor'
 // import { useParams } from 'solito/navigation'
+import { Redirect } from 'expo-router'
+import { getCurrentUser } from 'app/auth/firebase'
 
 export default function Screen() {
+    const currentUser = getCurrentUser()
     const insets = useSafeAreaInsets()
     const bgColor = useThemeColor('background')
     const styles = StyleSheet.create({
@@ -22,6 +25,11 @@ export default function Screen() {
             // backgroundColor: '#DAB8FC',
         },
     })
+
+    if (!currentUser) {
+        return <Redirect href="/(auth)/login" />
+    }
+
     return (
         <View style={styles.view}>
             <DocumentsScreen />

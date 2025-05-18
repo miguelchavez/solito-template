@@ -20,6 +20,7 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { useParams, useRouter } from 'solito/navigation'
+import { usePathname } from 'expo-router'
 
 import { SettingsContext } from 'app/providers/settingsContextProvider'
 
@@ -30,6 +31,7 @@ const IMG_HEIGHT = 500
 
 export default function Home() {
     const router = useRouter()
+    const pathname = usePathname()
     const { settings, updateSettings } = useContext(SettingsContext)
     const { height, width } = useWindowDimensions()
     const bgColor = useThemeColor('background')
@@ -113,24 +115,45 @@ export default function Home() {
         },
     })
 
-    const handleSettingsUpdate = (accepting: string) => {
-        // This updates de context and saves it to AsyncStorage
-        updateSettings({
-            theme: settings.theme,
-            bottomTabBarSize: settings.bottomTabBarSize,
-            isAgreementAccepted: accepting, // update this value
-        })
-        router.push('/(tabs)/home')
-    }
+    // const handleSettingsUpdate = (accepting: string) => {
+    //     // This updates de context and saves it to AsyncStorage
+    //     updateSettings({
+    //         theme: settings.theme,
+    //         bottomTabBarSize: settings.bottomTabBarSize,
+    //         isAgreementAccepted: accepting, // update this value
+    //     })
+    //     router.push('/(tabs)/home')
+    // }
 
     useEffect(() => {
         if (settings && settings.isAgreementAccepted) {
+            // console.log(
+            //     '[ onMount :: Settings agreement]:',
+            //     settings?.isAgreementAccepted,
+            // )
             setTimeout(() => {
                 // This is due to an error about navigation object not initializaed
-                router.push('/(tabs)/home')
-            }, 500)
+                if (pathname != '/home') {
+                    router.replace('/(tabs)/home')
+                }
+            }, 150)
         }
     }, [])
+
+    useEffect(() => {
+        if (settings && settings.isAgreementAccepted) {
+            // console.log(
+            //     '[ onSettings CHNGD :: Settings agreement]:',
+            //     settings?.isAgreementAccepted,
+            // )
+            setTimeout(() => {
+                // This is due to an error about navigation object not initializaed
+                if (pathname != '/home') {
+                    router.replace('/(tabs)/home')
+                }
+            }, 250)
+        }
+    }, [settings])
 
     const scrollRef = useAnimatedRef<Animated.ScrollView>()
     const scrollOffset = useScrollViewOffset(scrollRef)
