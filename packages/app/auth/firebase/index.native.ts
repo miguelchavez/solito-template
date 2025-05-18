@@ -44,16 +44,18 @@ const createUserWithEmailAndPassword = (email, password) => {
             return { token: token, user: user }
         })
         .catch((error) => {
-            let errorMessage = ''
+            let msg = ''
             if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!')
-                errorMessage = 'Este email ya está en uso.'
+                msg = 'That email address is already in use!'
+                // msg = 'Este email ya está en uso.'
             }
 
             if (error.code === 'auth/invalid-email') {
-                console.log('That email address is invalid!')
-                errorMessage = 'Este email no es válido.'
+                msg = 'That email address is invalid!'
+                // msg = 'Este email no es válido.'
             }
+            // const errorCode = error.code
+            const errorMessage = error.message ?? msg
 
             console.error(error)
         })

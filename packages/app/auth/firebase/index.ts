@@ -128,8 +128,16 @@ const signInWithEmailAndPassword = (email: string, password: string) => {
             return { token: token, user: user }
         })
         .catch((error) => {
+            let msg = ''
+            if (error.code === 'auth/email-already-in-use') {
+                msg = 'That email address is already in use!'
+            }
+
+            if (error.code === 'auth/invalid-email') {
+                msg = 'That email address is invalid!'
+            }
             // const errorCode = error.code
-            const errorMessage = error.message
+            const errorMessage = error.message ?? msg
             throw new Error(errorMessage)
         })
 }
