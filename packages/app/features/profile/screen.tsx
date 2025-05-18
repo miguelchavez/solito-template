@@ -243,7 +243,7 @@ export function ProfileScreen() {
 
     useEffect(() => {
         if (user) {
-            console.log('[ auth :: data ]:', user)
+            // console.log('[ auth :: data ]:', user)
             const f = formatDistanceToNow(
                 new Date(user.metadata.lastSignInTime ?? ''),
                 {
@@ -257,7 +257,6 @@ export function ProfileScreen() {
 
     return (
         <View style={styles.view}>
-            <H1>Profile</H1>
             <ScrollView contentContainerStyle={styles.content}>
                 <View style={[styles.section, { paddingTop: 4 }]}>
                     <Text style={styles.sectionTitle}>Account</Text>
