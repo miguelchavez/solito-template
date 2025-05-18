@@ -122,15 +122,11 @@ export default function Home() {
             bottomTabBarSize: settings.bottomTabBarSize,
             isAgreementAccepted: accepting, // update this value
         })
-        router.push('/(tabs)/home')
+        router.replace('/(tabs)/home')
     }
 
     useEffect(() => {
         if (settings && settings.isAgreementAccepted) {
-            // console.log(
-            //     '[ onMount :: Settings agreement]:',
-            //     settings?.isAgreementAccepted,
-            // )
             setTimeout(() => {
                 // This is due to an error about navigation object not initializaed
                 if (pathname != '/home') {
@@ -142,10 +138,6 @@ export default function Home() {
 
     useEffect(() => {
         if (settings && settings.isAgreementAccepted) {
-            // console.log(
-            //     '[ onSettings CHNGD :: Settings agreement]:',
-            //     settings?.isAgreementAccepted,
-            // )
             setTimeout(() => {
                 // This is due to an error about navigation object not initializaed
                 if (pathname != '/home') {

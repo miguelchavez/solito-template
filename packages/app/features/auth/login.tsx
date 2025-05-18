@@ -126,10 +126,7 @@ export default function LoginScreen() {
             // Autenticar con firebase
             signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    const { token, user } = userCredential
-                    // Guardar el token en el secure storage ? O firebase lo guarda?
-                    // console.log('[ @LoginScreen :: User signed in]:', user)
-                    // console.log('[ @LoginScreen :: Token]:', token)
+                    // const { token, user } = userCredential
                 })
                 .catch((error) => {
                     const errorCode = error.code
@@ -144,7 +141,7 @@ export default function LoginScreen() {
     useEffect(() => {
         if (auth && auth?.email) {
             setTimeout(() => {
-                // This is due to an error about navigation object not initializaed
+                // The timeot is due to an error about navigation object not initializaed
                 router.replace('/(tabs)/home')
             }, 500)
         }
@@ -153,7 +150,7 @@ export default function LoginScreen() {
     useEffect(() => {
         if (auth && auth?.email) {
             setTimeout(() => {
-                // This is due to an error about navigation object not initializaed
+                // The timeot is due to an error about navigation object not initializaed
                 router.replace('/(tabs)/home')
             }, 500)
         }
@@ -161,7 +158,6 @@ export default function LoginScreen() {
 
     return (
         <View style={styles.container}>
-            {/* <StatusBar barStyle="light-content" /> */}
             {/* Show left side with logo for tablets, hide for phones */}
             {width > 900 && (
                 <View style={styles.LogoContainer}>
