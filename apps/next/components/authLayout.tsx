@@ -31,7 +31,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             setIsAuthenticating(true)
             signInAnonymously()
                 .then((result) => {
-                    console.log('[ @layout :: SIGN IN RESULT ]:', result)
+                    // console.log('[ @layout :: SIGN IN RESULT ]:', result)
                 })
                 .catch((error) => {
                     // console.error('[ @layout :: SIGN IN ERROR ]:', error)

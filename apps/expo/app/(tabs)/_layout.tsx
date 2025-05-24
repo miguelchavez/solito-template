@@ -119,7 +119,7 @@ const _layout = () => {
 
             {/* Documents Screen */}
             <Tabs.Screen
-                name="documents"
+                name="documents/index"
                 options={{
                     title: 'Documents',
                     headerShown: false,

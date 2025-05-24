@@ -22,10 +22,12 @@
         "baseUrl": ".",
         "paths": {
             "app/*": ["../../packages/app/*"],
+            "@assets/*": ["../../packages/app/assets/*"],
             "@core/*": ["../../packages/app/core/*"],
             "@infra/*": ["../../packages/app/infrastructure/*"],
             "@repositories/*": ["../../packages/app/repositories/*"],
             "@utils/*": ["../../packages/app/utils/*"],
+            "@hooks/*": ["../../packages/app/hooks/*"],
             "@auth/*": ["../../packages/app/auth/*"]
         }
     },
