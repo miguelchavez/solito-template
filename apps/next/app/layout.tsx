@@ -1,6 +1,6 @@
 import { StylesProvider } from './styles-provider'
 import AuthLayout from '../components/authLayout'
-import './globals.css'
+import './styles/globals.css'
 
 export const metadata = {
     title: 'Solito App',

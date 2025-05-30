@@ -55,12 +55,8 @@ export function HomeScreen() {
 
     return (
         <View style={styles.view}>
-            {/* className="p-10 m-50" */}
             <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
             <View className="underline bg-orange-400">
-                <Text className="text-2xl font-bold underline bg-rose-300 rounded-sm">
-                    This is A Solito Template App.
-                </Text>
                 <P style={{ color: '#000' }}>
                     Your last session is from {timeAgo}
                 </P>
