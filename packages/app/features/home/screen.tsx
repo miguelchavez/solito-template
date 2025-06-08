@@ -39,9 +39,11 @@ export function HomeScreen() {
 
     const user = getCurrentUser()
 
+    /**
+     * When Authentication state changes, get user login time
+     */
     useEffect(() => {
         if (user) {
-            // console.log('[ auth :: data ]:', user)
             const f = formatDistanceToNow(
                 new Date(user.metadata.lastSignInTime ?? ''),
                 {
@@ -51,7 +53,7 @@ export function HomeScreen() {
             )
             setTimeAgo(f)
         }
-    }, [])
+    }, [user])
 
     return (
         <View style={styles.view}>
@@ -78,7 +80,7 @@ export function HomeScreen() {
             </View>
             <View style={{ flexDirection: 'row', gap: 16 }}>
                 <MotiLink
-                    href="/(tabs)/profile"
+                    href="/profile"
                     from={{
                         scale: 0,
                         rotateZ: '0deg',
@@ -104,7 +106,7 @@ export function HomeScreen() {
                 </MotiLink>
                 <Button
                     title="Open Modal"
-                    onPress={() => router.push('/(modals)/exampleModal')}
+                    onPress={() => router.push('/exampleModal')}
                 />
             </View>
         </View>

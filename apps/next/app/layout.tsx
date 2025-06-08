@@ -1,6 +1,7 @@
+// import AuthLayout from '@/components/authLayout'
 import { StylesProvider } from './styles-provider'
-import AuthLayout from '../components/authLayout'
-import './globals.css'
+// import clsx from 'clsx'
+import '@/styles/globals.css'
 
 export const metadata = {
     title: 'Solito App',
@@ -12,12 +13,17 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+    const isDevelopment =
+        process?.env?.NODE_ENV?.toLowerCase() === 'development' || false
     return (
-        <html lang="es">
-            <body>
-                <StylesProvider>
-                    <AuthLayout>{children}</AuthLayout>
-                </StylesProvider>
+        <html lang="es" suppressHydrationWarning>
+            <head>
+                {isDevelopment && (
+                    <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
+                )}
+            </head>
+            <body className="min-h-screen bg-background font-sans antialiased">
+                <StylesProvider>{children}</StylesProvider>
             </body>
         </html>
     )

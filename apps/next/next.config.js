@@ -66,6 +66,7 @@ const withTurpopack = {
  * @type {import('next').NextConfig}
  */
 module.exports = {
+    images: {},
     transpilePackages: [
         'react-native',
         'react-native-web',
@@ -80,7 +81,12 @@ module.exports = {
             __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
         },
     },
-    reactStrictMode: false, // reanimated doesn't support this on web
+    // reanimated (and thus, Moti) doesn't work with strict mode currently...
+    // https://github.com/nandorojo/moti/issues/224
+    // https://github.com/necolas/react-native-web/pull/2330
+    // https://github.com/nandorojo/moti/issues/224
+    // once that gets fixed, set this back to true
+    reactStrictMode: false,
 
     ...withWebpack,
     ...withTurpopack,
