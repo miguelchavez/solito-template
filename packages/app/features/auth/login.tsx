@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from 'react'
 import {
     StyleSheet,
@@ -5,25 +6,24 @@ import {
     View,
     TextInput,
     TouchableOpacity,
-    Image,
     Platform,
     useWindowDimensions,
     KeyboardAvoidingView,
-    StatusBar,
     Button,
 } from 'react-native'
+
+import { SolitoImage } from 'solito/image'
 
 import { useFirebaseAuth } from '@auth/firebase/hooks'
 import {
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
-    signInAnonymously,
-    onAuthStateChanged,
 } from '@auth/firebase/'
 
 import { useRouter } from 'solito/navigation'
-
 import { useThemeColor } from '@hooks/useThemeColor'
+
+import logo from '@assets/images/icon.png'
 
 export default function LoginScreen() {
     const auth = useFirebaseAuth()
@@ -42,13 +42,20 @@ export default function LoginScreen() {
     const bgLightBackground = useThemeColor('lightBackground')
     const bgSoftWhiteColor = useThemeColor('softWhite')
 
+    // console.log('gbColor:', bgColor)
+    // console.log('bgSideBarColor:', bgSidebarColor)
+    // console.log('ligthBackground:', lightBackground)
+    // console.log('widht:', width)
+    // console.log('widht < 900:', width < 900)
+    // console.log('widht > 900:', width > 900)
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             flexDirection: 'row',
             alignItems: 'flex-end',
             justifyContent: 'center',
-            backgroundColor: lightBackground,
+            backgroundColor: lightBackground ?? '#e0a9fb',
         },
         LogoContainer: {
             flex: 1,
@@ -160,7 +167,8 @@ export default function LoginScreen() {
         if (auth && auth?.email) {
             setTimeout(() => {
                 // The timeot is due to an error about navigation object not initializaed
-                router.replace('/(tabs)/home')
+                console.log('[  AUTHENTICATED, GOING HOME ]')
+                router.replace('/home')
             }, 500)
         }
     }, [])
@@ -169,18 +177,23 @@ export default function LoginScreen() {
         if (auth && auth?.email) {
             setTimeout(() => {
                 // The timeot is due to an error about navigation object not initializaed
-                router.replace('/(tabs)/home')
+                console.log('[ * AUTHENTICATED, GOING HOME ]')
+                router.replace('/home')
             }, 500)
         }
     }, [auth])
 
+    if (!lightBackground) return null
+
     return (
-        <View style={styles.container}>
-            {/* Show left side with logo for tablets, hide for phones */}
+        <View style={styles.container} className="MIGUEL">
+            {/* Show left side with logo for wide screens, hide for phones */}
             {width > 900 && (
                 <View style={styles.LogoContainer}>
-                    <Image
-                        source={require('@assets/images/icon.png')}
+                    <SolitoImage
+                        src={logo}
+                        // source={require('@assets/images/icon.png')}
+                        // source={require('../../assets/images/icon.png')}
                         resizeMode="center" // contain cover stretch
                         style={styles.logo}
                     />
@@ -193,8 +206,8 @@ export default function LoginScreen() {
             >
                 {/* Show logo for phones */}
                 {width < 900 && (
-                    <Image
-                        source={require('@assets/images/icon.png')}
+                    <SolitoImage
+                        src={logo}
                         resizeMode="cover"
                         style={styles.logoSmall}
                     />

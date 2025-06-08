@@ -1,3 +1,4 @@
+'use client'
 import { useRouter } from 'solito/navigation'
 import { useState, useEffect } from 'react'
 import {
@@ -11,13 +12,14 @@ import {
     Image,
 } from 'react-native'
 import { SymbolView } from 'expo-symbols'
-import * as Device from 'expo-device'
 import { getCurrentUser, signOut } from 'app/auth/firebase'
 
 import { useThemeColor } from '@hooks/useThemeColor'
 
 import { useContext } from 'react'
 import { SettingsContext } from 'app/providers/settingsContextProvider'
+
+import SidebarTabletSwitch from 'app/components/sidebarTabletSwitch'
 
 import { es } from 'date-fns/locale'
 import {
@@ -38,10 +40,6 @@ export function ProfileScreen() {
     const textSecondaryColor = useThemeColor('secondaryTextColor')
     const textTertiaryColor = useThemeColor('tertiaryTextColor')
     const softWhite = useThemeColor('softWhite')
-
-    const deviceType = Device.deviceType
-    const isPhone = deviceType == Device.DeviceType.PHONE
-
     const { width, height } = useWindowDimensions()
 
     const styles = StyleSheet.create({
@@ -324,18 +322,11 @@ export function ProfileScreen() {
                                     Small Sidebar on tablets
                                 </Text>
                                 <View style={styles.rowSpacer} />
-                                <Switch
-                                    value={bigIcons}
-                                    disabled={isPhone}
-                                    onChange={() =>
+                                <SidebarTabletSwitch
+                                    value={bigIcons ?? false}
+                                    onToggle={() =>
                                         setBigIcons((prev) => !prev)
                                     }
-                                    style={{
-                                        transform: [
-                                            { scaleX: 0.95 },
-                                            { scaleY: 0.95 },
-                                        ],
-                                    }}
                                 />
                             </View>
                         </View>
