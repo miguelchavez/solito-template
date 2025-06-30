@@ -2,33 +2,32 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-// import { useRouter } from 'next/router'
-import { getCurrentUser } from 'app/auth/firebase'
-// import { View } from 'react-native'
-// import { MotiLink } from 'solito/moti/app'
+import { useAuthState } from 'app/auth/firebase'
+// import { getCurrentUser } from 'app/auth/firebase'
 import { HomeScreen } from 'app/features/home/screen'
 
 const Home = () => {
-    const user = getCurrentUser()
+    const { user } = useAuthState()
     const router = useRouter()
+
     /**
      * When Authentication state changes, navigate to (tabs) home screen
      */
     useEffect(() => {
-        if (user) {
-            console.log('[ auth :: user ]:', user)
+        if (!user) {
+            console.log('[ /(tabs)/home/page :: NOT AUTHENTICATED! ]')
+            // router.replace('/login')
         } else {
-            console.log('[ NOT AUTHENTICATED! ]')
-            router.replace('/login')
+            console.log('[ /(tabs)/home/page :: [currentUser] ]:', user)
         }
-    }, [])
+    }, [user])
 
     if (!user) {
         return null
     }
 
     return (
-        <div className="m-8 p-8 flex-1 text-2xl bg-rose-100 rounded-lg">
+        <div className="m-2 p-4">
             <HomeScreen />
         </div>
     )

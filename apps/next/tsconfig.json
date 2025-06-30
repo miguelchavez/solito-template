@@ -29,7 +29,8 @@
             "@repositories/*": ["../../packages/app/repositories/*"],
             "@utils/*": ["../../packages/app/utils/*"],
             "@hooks/*": ["../../packages/app/hooks/*"],
-            "@auth/*": ["../../packages/app/auth/*"]
+            "@auth/*": ["../../packages/app/auth/*"],
+            "@components/*": ["./lib/components/*"]
         }
     },
     "include": [

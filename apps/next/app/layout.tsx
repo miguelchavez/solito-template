@@ -22,7 +22,7 @@ export default function RootLayout({
                     <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
                 )}
             </head>
-            <body className="min-h-screen bg-background font-sans antialiased">
+            <body className="min-h-screen bg-background text-base antialiased">
                 <StylesProvider>{children}</StylesProvider>
             </body>
         </html>
