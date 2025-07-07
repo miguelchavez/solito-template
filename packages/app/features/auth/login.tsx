@@ -23,8 +23,6 @@ import { useRouter } from 'solito/navigation'
 import { useThemeColor } from '@hooks/useThemeColor'
 
 import logo from '@assets/images/icon.png'
-import Test from '@components/test'
-// import Test from '../../../../apps/next/lib/components/test'
 
 export default function LoginScreen() {
     const auth = useFirebaseAuth()
@@ -168,15 +166,14 @@ export default function LoginScreen() {
                         }}
                     />
                 )}
-                <Test />
                 <Text className="text-6xl text-white underline bg-orange-400 font-bold">
                     Otra cosa
                 </Text>
-                <div className=" bg-orange-400 font-bold">
+                {/* <div className=" bg-orange-400 font-bold">
                     <p className="text-6xl text-white underline bg-orange-400 font-bold">
                         Otra cosa WEB
                     </p>
-                </div>
+                </div> */}
                 <Text
                     // className="text-6xl text-white underline bg-orange-400 font-bold"
                     // https://docs.expo.dev/guides/tailwind/

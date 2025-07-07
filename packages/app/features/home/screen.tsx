@@ -18,9 +18,6 @@ import { useThemeColor } from '@hooks/useThemeColor'
 import { es } from 'date-fns/locale'
 import { formatDistanceToNow } from 'date-fns'
 
-// import Test from '@components/test'
-import Test from '../../../../apps/next/lib/components/test'
-
 export function HomeScreen() {
     const router = useRouter()
     const { width, height } = useWindowDimensions()
@@ -60,7 +57,6 @@ export function HomeScreen() {
 
     return (
         <View style={styles.view}>
-            <Test />
             <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
             <View className="underline bg-orange-400">
                 <P style={{ color: '#000' }}>

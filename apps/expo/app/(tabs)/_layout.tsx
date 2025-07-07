@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 
 // import TabBarBackground from '@components/TabBarBackground'
-import { HapticTab } from '@components/HapticTab'
+import { HapticTab } from '../../components/HapticTab'
 import { useThemeColor } from '@hooks/useThemeColor'
 import { useEffect, useState } from 'react'
 
