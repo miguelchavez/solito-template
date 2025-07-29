@@ -1,11 +1,5 @@
 import { useRouter } from 'solito/navigation'
-import {
-    StyleSheet,
-    View,
-    Text,
-    Pressable,
-    useWindowDimensions,
-} from 'react-native'
+import { View, Text, Platform, useWindowDimensions } from 'react-native'
 
 import { useThemeColor } from '@hooks/useThemeColor'
 
@@ -15,22 +9,20 @@ export function DocumentsScreen() {
     const textColor = useThemeColor('text')
     const linkColor = useThemeColor('tertiary')
     const { width, height } = useWindowDimensions()
-    const styles = StyleSheet.create({
-        view: {
-            flex: 1,
-            padding: 16,
-            // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
-            gap: 32,
-            backgroundColor: bgColor, // Added background color
-            color: textColor,
-        },
-        text: {
-            color: textColor,
-        },
-    })
 
     return (
-        <View style={styles.view}>
+        <View
+            style={{
+                flex: 1,
+                width: '100dvw', //'100vw',
+                height: '100dvh', //'100vh',
+                padding: 16,
+                gap: 32,
+                // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
+                backgroundColor: bgColor, // Added background color
+                color: textColor,
+            }}
+        >
             <H1>Documents</H1>
         </View>
     )
@@ -41,10 +33,10 @@ const H1 = ({ children }: { children: React.ReactNode }) => {
     return (
         <Text
             style={{
+                fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
+                fontWeight: 'bold',
                 color: textColor,
                 textAlign: 'center',
-                fontFamily: 'Inter',
-                fontWeight: '800',
                 fontSize: 26,
             }}
         >
@@ -64,17 +56,16 @@ const P = ({
     style?: any
     selectable?: boolean
 }) => {
-    const textColor = useThemeColor('text')
-    const linkColor = useThemeColor('secondary')
+    const textColor = useThemeColor('text') // default text color
     return (
         <Text
             selectable={selectable}
             style={{
-                fontFamily: 'Inter',
-                textAlign: 'justify',
-                color: selectable ? linkColor : textColor,
+                color: textColor,
                 fontSize: 18,
-                ...style,
+                fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
+                textAlign: 'justify',
+                ...style, // override style passed in props
             }}
             {...props}
         >

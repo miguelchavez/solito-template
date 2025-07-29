@@ -3,35 +3,44 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthState } from 'app/auth/firebase'
-// import { getCurrentUser } from 'app/auth/firebase'
-import { HomeScreen } from 'app/features/home/screen'
+
+import { SolitoImage } from 'solito/image'
+import logo from '@assets/images/icon.png'
 
 const Main = () => {
-    // const user = getCurrentUser()
-    const { user } = useAuthState()
+    const { user, state } = useAuthState()
     const router = useRouter()
 
     /**
      * When Authentication state changes, navigate to (tabs) home screen
      */
+
     useEffect(() => {
-        if (!user) {
-            console.log('[ /(tabs)/home/page :: NOT AUTHENTICATED! ]')
-            // router.replace('/login')
-        } else {
-            console.log('[ /(tabs)/home/page :: [currentUser] ]:', user)
-        }
-    }, [user])
+        console.log('[ / :: User:', user, ' State:', state, ']')
+        if (user == null && state === 'unauthenticated') {
+            // If not authenticated and initializing, redirect to login.
+            router.push('/login')
+        } else router.push('/dashboard')
+    }, [user, state])
 
-    if (!user) {
-        return null
-    }
-
+    // if (user == null && state === 'initializing') {
     return (
-        <div className="m-2 p-4">
-            <HomeScreen />
+        <div className="flex h-full w-full self-center items-center justify-center bg-purple-400">
+            <SolitoImage
+                alt="Logo"
+                src={logo}
+                unoptimized
+                contentPosition="center"
+                contentFit="cover"
+                style={{
+                    alignSelf: 'center',
+                    height: '100dvh', // '100vh',
+                    width: '100dvw', // '100vw',
+                }}
+            />
         </div>
     )
+    // }
 }
 
 export default Main

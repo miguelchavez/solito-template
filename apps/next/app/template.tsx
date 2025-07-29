@@ -20,6 +20,7 @@ export default function Template({ children }: { children: ReactNode }) {
         // >
         //     {children}
         // </motion.div>
+
         <Animated.View entering={FadeIn} exiting={FadeOut}>
             {children}
         </Animated.View>

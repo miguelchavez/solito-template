@@ -88,7 +88,7 @@ export default function LoginScreen() {
             setTimeout(() => {
                 // The timeot is due to an error about navigation object not initializaed
                 console.log('[  AUTHENTICATED, GOING HOME ]')
-                router.replace('/home')
+                router.replace('/dashboard')
             }, 150)
         }
     }, [])
@@ -98,7 +98,7 @@ export default function LoginScreen() {
             setTimeout(() => {
                 // The timeot is due to an error about navigation object not initializaed
                 console.log('[ * AUTHENTICATED, GOING HOME ]')
-                router.replace('/home')
+                router.replace('/dashboard')
             }, 500)
         }
     }, [auth])
@@ -110,8 +110,8 @@ export default function LoginScreen() {
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '100vw',
-                height: '100vh',
+                width: '100dvw', //'100vw',
+                height: '100dvh', //'100vh',
                 flexDirection: 'row',
                 backgroundColor: lightBackground,
             }}
@@ -126,6 +126,7 @@ export default function LoginScreen() {
                     }}
                 >
                     <SolitoImage
+                        alt="Logo"
                         src={logo}
                         unoptimized
                         resizeMode="center" // contain cover stretch
@@ -154,6 +155,7 @@ export default function LoginScreen() {
                 {/* Show logo for phones */}
                 {width < 900 && (
                     <SolitoImage
+                        alt="Logo"
                         src={logo}
                         unoptimized
                         resizeMode="cover"
@@ -166,16 +168,7 @@ export default function LoginScreen() {
                         }}
                     />
                 )}
-                <Text className="text-6xl text-white underline bg-orange-400 font-bold">
-                    Otra cosa
-                </Text>
-                {/* <div className=" bg-orange-400 font-bold">
-                    <p className="text-6xl text-white underline bg-orange-400 font-bold">
-                        Otra cosa WEB
-                    </p>
-                </div> */}
                 <Text
-                    // className="text-6xl text-white underline bg-orange-400 font-bold"
                     // https://docs.expo.dev/guides/tailwind/
                     // style={{
                     //     color: tintColor,
@@ -185,22 +178,11 @@ export default function LoginScreen() {
                     style={{
                         // Title style
                         // fontFamily: 'Inter',
-                        $$css: true,
-                        fontSize: 'text-6xl',
-                        fontWeight: 'font-bold',
-                        textDecoration: 'underline',
-                        margin: 'mb-8',
-                        backgroundColor: 'bg-orange-400',
-                        color: 'text-blue-600',
+                        fontSize: 34,
+                        fontWeight: 'bold',
+                        marginBottom: 30,
+                        color: tintColor,
                     }}
-                    // style={{
-                    //     // Title style
-                    //     // fontFamily: 'Inter',
-                    //     fontSize: 34,
-                    //     fontWeight: 'bold',
-                    //     marginBottom: 30,
-                    //     color: tintColor,
-                    // }}
                 >
                     Welcome Back
                 </Text>

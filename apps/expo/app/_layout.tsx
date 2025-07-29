@@ -48,7 +48,7 @@ export default function App() {
         if (auth) {
             setTimeout(() => {
                 // This is due to an error about navigation object not initializaed
-                router.replace('/(tabs)/home')
+                router.replace('/(tabs)/dashboard')
             }, 500)
         } else {
             router.replace('/(auth)/login')
@@ -60,7 +60,7 @@ export default function App() {
             if (auth) {
                 setTimeout(() => {
                     // This is due to an error about navigation object not initializaed
-                    router.replace('/(tabs)/home')
+                    router.replace('/(tabs)/dashboard')
                 }, 500)
             } else {
                 router.replace('/(auth)/login')

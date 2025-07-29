@@ -1,9 +1,15 @@
-@import './silka.css';
-/* @import 'tw-animate-css'; */
+/**
+ * New CSS Viewport Units
+ *  https://www.smashingmagazine.com/2023/12/new-css-viewport-units-not-solve-classic-scrollbar-problem/
+ *  https://www.reddit.com/r/webdev/comments/1jyn9mf/tailwind_docs_explain_everything_so_simply_dvh/#lightbox
+ */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './silka.css';
+@import 'tailwindcss';
+/* @import 'tw-animate-css'; */
+/* @import 'tailwind-merge'; */
+
+/* @source "../../../app/features"  */
 
 @custom-variant dark (&:is(.dark *));
 

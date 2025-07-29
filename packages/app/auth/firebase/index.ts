@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-// import { useRouter } from 'solito/navigation' // This is for web... not native
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
@@ -40,10 +39,12 @@ export const firebaseConfig = {
 
 interface AuthState {
     user: User | null
+    state: string
 }
 
 const initialAuthState: AuthState = {
     user: null,
+    state: 'initializing',
 }
 
 // Initialize Firebase
@@ -194,39 +195,32 @@ const sendPasswordResetEmail = (userEmail: string) => {
 }
 
 const useAuthState = () => {
+    const [initializing, setInitializing] = useState<boolean>(true) // `initializing` means `I am not waiting for authentication response from firebase`
     const [authState, setAuthState] = useState<AuthState>(initialAuthState)
     const router = useRouter()
 
-    // useEffect(() => {
-    //     console.log('[ useAuthState :: Initializing auth state ]')
-    //     const unsubscribe = onAuthStateChanged((authUser: User | null) => {
-    //         console.log(
-    //             '[ useAuthState :: OnAuthStateChanged -- user: ]',
-    //             authUser,
-    //         )
-    //         setAuthState({ user: authUser })
-    //     })
-
-    //     return () => unsubscribe()
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [])
-
     useEffect(() => {
-        console.log('[ useAuthState :: 2 :: Initializing auth state ]')
-        onAuthStateChanged((authUser: User) => {
-            console.log(
-                '[ useAuthState :: OnAuthStateChanged 2  -- user: ]',
-                authUser,
-            )
-            if (authState?.user === undefined) return
+        if (initializing) {
+            const unsubscribe = onAuthStateChanged((authUser: User | null) => {
+                if (typeof authUser === 'undefined' || authUser == null) return
+                if (initializing && authUser) {
+                    const valid =
+                        authUser?.email &&
+                        authUser?.uid &&
+                        !authUser?.isAnonymous
+                    setInitializing(false)
+                    setAuthState({
+                        user: authUser,
+                        state: valid ? 'authenticated' : 'unauthenticated',
+                    })
+                    console.log('[ useAuthState :: refreshing page ]')
+                    router.refresh()
+                }
+            })
 
-            // refresh when user changed to ease testing
-            if (authState?.user?.email !== authUser?.email) {
-                console.log('[ useAuthState :: refreshing page ]')
-                router.refresh()
-            }
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+            return () => unsubscribe()
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }
     }, [authState])
 
     return authState
