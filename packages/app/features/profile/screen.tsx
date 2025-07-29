@@ -412,7 +412,7 @@ export function ProfileScreen() {
                                         { color: textColor, fontSize: 16 },
                                     ]}
                                 >
-                                    Use System Settings for Dark Mode
+                                    System Settings for Dark Mode
                                 </Text>
                                 <View style={styles.rowSpacer} />
                                 <Switch

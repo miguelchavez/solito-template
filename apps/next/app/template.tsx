@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+// import { motion } from 'framer-motion'
 import Animated from 'react-native-reanimated'
 import { FadeIn, FadeOut } from 'react-native-reanimated'
 import { ReactNode } from 'react'

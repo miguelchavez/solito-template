@@ -44,7 +44,7 @@ interface AuthState {
 
 const initialAuthState: AuthState = {
     user: null,
-    state: 'initializing',
+    state: 'loading',
 }
 
 // Initialize Firebase
@@ -195,33 +195,36 @@ const sendPasswordResetEmail = (userEmail: string) => {
 }
 
 const useAuthState = () => {
-    const [initializing, setInitializing] = useState<boolean>(true) // `initializing` means `I am not waiting for authentication response from firebase`
+    /**
+     * Auth States:
+     *      `loading`: Loading State, default.
+     *      `initializing`: onMount initialized authState change subscription
+     *      `authenticated`: Authentication pocess is finished, user is authenticated.
+     *      `unautenticated`: Authentication finished with error.
+     */
     const [authState, setAuthState] = useState<AuthState>(initialAuthState)
     const router = useRouter()
 
     useEffect(() => {
-        if (initializing) {
+        if (authState?.state == 'loading') {
+            // We only subscribe when state is loading.
+            setAuthState({ user: null, state: 'initializing' }) // changing state to initialized
             const unsubscribe = onAuthStateChanged((authUser: User | null) => {
-                if (typeof authUser === 'undefined' || authUser == null) return
-                if (initializing && authUser) {
-                    const valid =
-                        authUser?.email &&
-                        authUser?.uid &&
-                        !authUser?.isAnonymous
-                    setInitializing(false)
-                    setAuthState({
-                        user: authUser,
-                        state: valid ? 'authenticated' : 'unauthenticated',
-                    })
-                    console.log('[ useAuthState :: refreshing page ]')
-                    router.refresh()
-                }
+                const valid =
+                    authUser?.email && authUser?.uid && !authUser?.isAnonymous
+                setAuthState({
+                    user: authUser,
+                    state: valid ? 'authenticated' : 'unauthenticated',
+                })
             })
-
             return () => unsubscribe()
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }
-    }, [authState])
+    }, [])
+
+    // useEffect(() => {
+    //     console.log('[ useAuthState :: onAuthStateChanged ]:', authState)
+    // }, [authState])
 
     return authState
 }

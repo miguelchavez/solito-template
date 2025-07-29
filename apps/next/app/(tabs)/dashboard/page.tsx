@@ -16,11 +16,11 @@ const Home = () => {
      * When Authentication state changes, navigate to (tabs) home screen
      */
     useEffect(() => {
-        if (
-            (user == null && state == 'unauthenticated') ||
-            state == 'initializing'
-        ) {
+        if (user == null && state === 'unauthenticated') {
+            // If not authenticated, redirect to login.
             router.push('/login')
+        } else if (user != null && state === 'authenticated') {
+            router.refresh()
         }
     }, [user, state])
 

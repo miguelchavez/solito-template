@@ -14,18 +14,17 @@ const Main = () => {
     /**
      * When Authentication state changes, navigate to (tabs) home screen
      */
-
     useEffect(() => {
-        console.log('[ / :: User:', user, ' State:', state, ']')
         if (user == null && state === 'unauthenticated') {
-            // If not authenticated and initializing, redirect to login.
+            // If not authenticated, redirect to login.
             router.push('/login')
-        } else router.push('/dashboard')
+        } else if (user != null && state === 'authenticated') {
+            router.push('/dashboard')
+        }
     }, [user, state])
 
-    // if (user == null && state === 'initializing') {
     return (
-        <div className="flex h-full w-full self-center items-center justify-center bg-purple-400">
+        <div className="flex h-full w-full self-center items-center justify-center bg-purple-400 animate-pulse">
             <SolitoImage
                 alt="Logo"
                 src={logo}
@@ -40,7 +39,6 @@ const Main = () => {
             />
         </div>
     )
-    // }
 }
 
 export default Main

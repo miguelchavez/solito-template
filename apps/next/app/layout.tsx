@@ -1,4 +1,3 @@
-// import AuthLayout from '@/components/authLayout'
 import { StylesProvider } from './styles-provider'
 // import clsx from 'clsx'
 import '@/styles/globals.css'
