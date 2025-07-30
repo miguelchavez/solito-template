@@ -62,7 +62,7 @@ const _layout = () => {
 
     return (
         <Tabs
-            initialRouteName="home"
+            initialRouteName="dashboard"
             backBehavior="history"
             screenOptions={{
                 tabBarActiveTintColor: activeColor,
@@ -99,7 +99,7 @@ const _layout = () => {
         >
             {/* Home Screen */}
             <Tabs.Screen
-                name="home"
+                name="dashboard"
                 options={{
                     title: 'Dashboard',
                     headerShown: false,
