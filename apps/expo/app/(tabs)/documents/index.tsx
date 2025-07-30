@@ -8,30 +8,15 @@ import { Redirect } from 'expo-router'
 import { getCurrentUser } from 'app/auth/firebase'
 
 export default function Screen() {
-    const currentUser = getCurrentUser()
-    const insets = useSafeAreaInsets()
+    const user = getCurrentUser()
     const bgColor = useThemeColor('background')
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-        },
-        view: {
-            flex: 1,
-            backgroundColor: bgColor, // Added background color
-            // paddingTop: insets.top + 32,
-            // paddingBottom: insets.bottom,
-            // paddingLeft: insets.left,
-            // paddingRight: insets.right,
-            // backgroundColor: '#DAB8FC',
-        },
-    })
 
-    if (!currentUser) {
-        return <Redirect href="/(auth)/login" />
-    }
+    // if (typeof user === 'undefined' || user == null || !user) {
+    //     return <Redirect href="/(auth)/login" />
+    // }
 
     return (
-        <View style={styles.view}>
+        <View style={{ flex: 1, backgroundColor: bgColor }}>
             <DocumentsScreen />
         </View>
     )

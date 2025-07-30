@@ -122,15 +122,15 @@ export default function Home() {
             bottomTabBarSize: settings.bottomTabBarSize,
             isAgreementAccepted: accepting, // update this value
         })
-        router.replace('/(tabs)/home')
+        router.replace('/(tabs)/dashboard')
     }
 
     useEffect(() => {
         if (settings && settings.isAgreementAccepted) {
             setTimeout(() => {
                 // This is due to an error about navigation object not initializaed
-                if (pathname != '/home') {
-                    router.replace('/(tabs)/home')
+                if (pathname != '/dashboard') {
+                    router.replace('/(tabs)/dashboard')
                 }
             }, 150)
         }
@@ -140,8 +140,8 @@ export default function Home() {
         if (settings && settings.isAgreementAccepted) {
             setTimeout(() => {
                 // This is due to an error about navigation object not initializaed
-                if (pathname != '/home') {
-                    router.replace('/(tabs)/home')
+                if (pathname != '/dashboard') {
+                    router.replace('/(tabs)/dashboard')
                 }
             }, 250)
         }

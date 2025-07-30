@@ -1,8 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/**
+ * New CSS Viewport Units
+ *  https://www.smashingmagazine.com/2023/12/new-css-viewport-units-not-solve-classic-scrollbar-problem/
+ *  https://www.reddit.com/r/webdev/comments/1jyn9mf/tailwind_docs_explain_everything_so_simply_dvh/#lightbox
+ */
 
-@import 'styles/silka.css';
+@import './silka.css';
+@import 'tailwindcss';
+/* @import 'tw-animate-css'; */
+/* @import 'tailwind-merge'; */
+
+/* @source "../../../app/features"  */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -159,10 +166,19 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -ms-overflow-style: scrollbar;
-    font-family: "'silkaregular', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+    font-family: SilkaRegular, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+    /* text-base */
+    font-size: 1rem;
+    line-height: 1.5rem;
     @apply transition-colors duration-300;
 }
 
 /* div * {
-    font-family: "'silkaregular', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif" !important;
+    font-family: SilkaRegular, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5rem;
 } */

@@ -1,4 +1,5 @@
 'use client'
+
 import { useRouter } from 'solito/navigation'
 import { useState, useEffect } from 'react'
 import {
@@ -11,8 +12,9 @@ import {
     ScrollView,
     Image,
 } from 'react-native'
-import { SymbolView } from 'expo-symbols'
-import { getCurrentUser, signOut } from 'app/auth/firebase'
+import Icono from 'app/components/icons'
+import { signOut } from 'app/auth/firebase'
+import { useAuthState } from 'app/auth/firebase'
 
 import { useThemeColor } from '@hooks/useThemeColor'
 
@@ -32,7 +34,7 @@ import {
 
 export function ProfileScreen() {
     const router = useRouter()
-    const user = getCurrentUser()
+    const { user, state } = useAuthState()
     const { settings, updateSettings } = useContext(SettingsContext)
     const menuTitle = useThemeColor('menuTitleColor')
     const bgColor = useThemeColor('background')
@@ -43,24 +45,13 @@ export function ProfileScreen() {
     const { width, height } = useWindowDimensions()
 
     const styles = StyleSheet.create({
-        view: {
-            flex: 1,
-            padding: 14,
-            paddingLeft: 24,
-            paddingRight: 24,
-            gap: 8,
-            backgroundColor: bgColor, // Added background color
-            color: textColor,
-        },
-        text: {
-            color: textColor,
-        },
         card: {
             padding: 10,
             paddingLeft: 18,
             backgroundColor: softWhite,
             borderRadius: 10,
         },
+
         subtitle: {
             color: textTertiaryColor,
             fontSize: 16,
@@ -73,32 +64,18 @@ export function ProfileScreen() {
             width: '100%',
         },
         /** Content */
-        content: {
-            paddingHorizontal: 16,
-        },
         contentFooter: {
             marginTop: 24,
             fontSize: 13,
             fontWeight: '500',
             textAlign: 'center',
-            // color: '#a69f9f',
-            color: menuTitle,
         },
         /** Section */
         section: {
             paddingVertical: 12,
         },
         sectionTitle: {
-            margin: 8,
-            marginLeft: 12,
-            // paddingTop: 10,
-            fontSize: 13,
-            // fontSize: 16,
             letterSpacing: 0.33,
-            fontWeight: '500',
-            // fontWeight: '300',
-            // color: '#a69f9f',
-            color: menuTitle,
             textTransform: 'uppercase',
         },
         sectionBody: {
@@ -114,87 +91,51 @@ export function ProfileScreen() {
         },
         /** Profile */
         profile: {
-            padding: 12,
-            backgroundColor: '#fff',
             borderRadius: 12,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'flex-start',
+            gap: 12,
         },
         profileAvatar: {
             width: 60,
             height: 60,
             borderRadius: 9999,
-            marginRight: 12,
         },
         profileBody: {
             marginRight: 'auto',
         },
-        profileName: {
-            fontSize: 18,
-            fontWeight: '600',
-            color: textColor, // '#292929',
-        },
         profileHandle: {
-            marginTop: 2,
             fontSize: 16,
             fontWeight: '400',
-            // color: '#858585',
-            color: textSecondaryColor,
         },
         profileDetail: {
-            color: menuTitle,
-            fontSize: 14,
-            fontWeight: '300',
             textAlign: 'justify',
             width: '100%',
         },
         /** Row */
         row: {
-            // justifyContent: 'space-between',
-            // marginVertical: 4,
             height: 44,
             width: '100%',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'flex-start',
-            paddingRight: 12,
-        },
-        rowWrapper: {
-            paddingLeft: 16,
-            backgroundColor: '#fff',
-            borderTopWidth: 1,
-            borderColor: '#f0f0f0',
         },
         rowFirst: {
             borderTopLeftRadius: 12,
             borderTopRightRadius: 12,
         },
         rowLabel: {
-            fontSize: 16,
             letterSpacing: 0.24,
-            color: textColor,
         },
         rowSpacer: {
             flexGrow: 1,
             flexShrink: 1,
             flexBasis: 0,
         },
-        rowValue: {
-            fontSize: 16,
-            fontWeight: '500',
-            color: menuTitle, //'#ababab',
-            marginRight: 4,
-        },
         rowLast: {
             borderBottomLeftRadius: 12,
             borderBottomRightRadius: 12,
-        },
-        rowLabelLogout: {
-            width: '100%',
-            textAlign: 'center',
-            fontWeight: '600',
-            color: textTertiaryColor, // '#dc2626',
         },
     })
 
@@ -240,10 +181,9 @@ export function ProfileScreen() {
     }, [settings])
 
     useEffect(() => {
-        if (user) {
-            // console.log('[ auth :: data ]:', user)
+        if (user != null && state === 'authenticated') {
             const f = formatDistanceToNow(
-                new Date(user.metadata.lastSignInTime ?? ''),
+                new Date(user?.metadata?.lastSignInTime ?? ''),
                 {
                     addSuffix: true,
                     locale: es,
@@ -254,16 +194,51 @@ export function ProfileScreen() {
     }, [])
 
     return (
-        <View style={styles.view}>
-            <ScrollView contentContainerStyle={styles.content}>
-                <View style={[styles.section, { paddingTop: 4 }]}>
-                    <Text style={styles.sectionTitle}>Account</Text>
+        <View
+            style={{
+                flex: 1,
+                width: '100dvw', //'100vw',  No esta aceotando 'dvw' como unidad!
+                height: '100dvh', //'100vh',
+                padding: 14,
+                paddingLeft: 24,
+                paddingRight: 24,
+                gap: 8,
+                backgroundColor: bgColor, // Added background color
+
+                // alignItems: 'center',
+                // justifyContent: 'center',
+                // flexDirection: 'row',
+            }}
+        >
+            <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
+                <View style={{ paddingVertical: 12, paddingTop: 4 }}>
+                    <Text
+                        style={[
+                            styles.sectionTitle,
+                            {
+                                margin: 8,
+                                marginLeft: 12,
+                                fontSize: 13,
+                                fontWeight: '400',
+                                color: menuTitle,
+                            },
+                        ]}
+                    >
+                        Account
+                    </Text>
                     <View style={styles.sectionBody}>
                         <TouchableOpacity
                             onPress={() => {
                                 // handle onPress
                             }}
-                            style={styles.profile}
+                            style={[
+                                styles.profile,
+                                {
+                                    backgroundColor: '#fff',
+                                    padding: 12,
+                                    marginTop: 10,
+                                },
+                            ]}
                         >
                             <Image
                                 alt={user?.displayName ?? 'Guest User'}
@@ -275,50 +250,136 @@ export function ProfileScreen() {
                                 style={styles.profileAvatar}
                             />
                             <View style={styles.profileBody}>
-                                <Text style={styles.profileName}>
+                                <Text
+                                    style={{
+                                        fontSize: 18,
+                                        fontWeight: '600',
+                                        color: textColor,
+                                    }}
+                                >
                                     {user?.isAnonymous
                                         ? 'Guest'
                                         : user?.displayName}
                                 </Text>
-                                <Text style={styles.profileHandle}>
+                                <Text
+                                    style={[
+                                        styles.profileHandle,
+                                        {
+                                            color: textSecondaryColor,
+                                            marginTop: 2,
+                                        },
+                                    ]}
+                                >
                                     {user?.email ?? 'guest@user.com'}
                                 </Text>
-                                <Text style={styles.profileDetail}>
+                                <Text
+                                    style={[
+                                        styles.profileDetail,
+                                        {
+                                            color: menuTitle,
+                                            fontSize: 14,
+                                            fontWeight: '300',
+                                        },
+                                    ]}
+                                >
                                     Signed in {timeAgo}
                                 </Text>
                             </View>
-                            <SymbolView
+                            <Icono
                                 size={22}
-                                name="chevron.right"
+                                sfName="chevron.right"
+                                DIName="chevron-right"
                                 tintColor={menuTitle}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Preferences</Text>
+                <View style={{ paddingVertical: 12, paddingTop: 4 }}>
+                    <Text
+                        style={[
+                            styles.sectionTitle,
+                            {
+                                margin: 8,
+                                marginLeft: 12,
+                                fontSize: 13,
+                                fontWeight: '400',
+                                color: menuTitle,
+                            },
+                        ]}
+                    >
+                        Preferences
+                    </Text>
                     <View style={styles.sectionBody}>
-                        <View style={[styles.rowWrapper, styles.rowFirst]}>
+                        <View
+                            style={[
+                                {
+                                    paddingLeft: 16,
+                                    backgroundColor: '#fff',
+                                    borderColor: '#f0f0f0',
+                                    borderTopWidth: 1,
+                                },
+                                styles.rowFirst,
+                            ]}
+                        >
                             <TouchableOpacity
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={styles.row}
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
                             >
-                                <Text style={styles.rowLabel}>Language</Text>
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
+                                    Language
+                                </Text>
                                 <View style={styles.rowSpacer} />
-                                <Text style={styles.rowValue}>English</Text>
-                                <SymbolView
+                                <Text
+                                    style={[
+                                        { marginRight: 4 },
+                                        {
+                                            color: menuTitle,
+                                            fontSize: 16,
+                                            fontWeight: '500',
+                                        },
+                                    ]}
+                                >
+                                    English
+                                </Text>
+                                <Icono
                                     size={19}
-                                    name="chevron.right"
+                                    sfName="chevron.right"
+                                    DIName="chevron-right"
                                     tintColor={menuTitle}
                                     // color="#bcbcbc"
                                 />
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.rowWrapper}>
-                            <View style={styles.row}>
-                                <Text style={styles.rowLabel}>
+                        <View
+                            style={{
+                                paddingLeft: 16,
+                                backgroundColor: '#fff',
+                                borderColor: '#f0f0f0',
+                                borderTopWidth: 1,
+                            }}
+                        >
+                            <View
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
                                     Small Sidebar on tablets
                                 </Text>
                                 <View style={styles.rowSpacer} />
@@ -330,10 +391,27 @@ export function ProfileScreen() {
                                 />
                             </View>
                         </View>
-                        <View style={styles.rowWrapper}>
-                            <View style={styles.row}>
-                                <Text style={styles.rowLabel}>
-                                    Use System Settings for Dark Mode
+                        <View
+                            style={{
+                                paddingLeft: 16,
+                                backgroundColor: '#fff',
+                                borderColor: '#f0f0f0',
+                                borderTopWidth: 1,
+                            }}
+                        >
+                            <View
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
+                                    System Settings for Dark Mode
                                 </Text>
                                 <View style={styles.rowSpacer} />
                                 <Switch
@@ -357,9 +435,26 @@ export function ProfileScreen() {
                                 />
                             </View>
                         </View>
-                        <View style={styles.rowWrapper}>
-                            <View style={styles.row}>
-                                <Text style={styles.rowLabel}>
+                        <View
+                            style={{
+                                paddingLeft: 16,
+                                backgroundColor: '#fff',
+                                borderColor: '#f0f0f0',
+                                borderTopWidth: 1,
+                            }}
+                        >
+                            <View
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
                                     Force Dark mode
                                 </Text>
                                 <View style={styles.rowSpacer} />
@@ -384,9 +479,26 @@ export function ProfileScreen() {
                                 />
                             </View>
                         </View>
-                        <View style={styles.rowWrapper}>
-                            <View style={styles.row}>
-                                <Text style={styles.rowLabel}>
+                        <View
+                            style={{
+                                paddingLeft: 16,
+                                backgroundColor: '#fff',
+                                borderColor: '#f0f0f0',
+                                borderTopWidth: 1,
+                            }}
+                        >
+                            <View
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
                                     Email Notifications
                                 </Text>
                                 <View style={styles.rowSpacer} />
@@ -404,9 +516,29 @@ export function ProfileScreen() {
                                 />
                             </View>
                         </View>
-                        <View style={[styles.rowWrapper, styles.rowLast]}>
-                            <View style={styles.row}>
-                                <Text style={styles.rowLabel}>
+                        <View
+                            style={[
+                                {
+                                    paddingLeft: 16,
+                                    backgroundColor: '#fff',
+                                    borderColor: '#f0f0f0',
+                                    borderTopWidth: 1,
+                                },
+                                styles.rowLast,
+                            ]}
+                        >
+                            <View
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
                                     Push Notifications
                                 </Text>
                                 <View style={styles.rowSpacer} />
@@ -426,88 +558,178 @@ export function ProfileScreen() {
                         </View>
                     </View>
                 </View>
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Resources</Text>
+                <View style={{ paddingVertical: 12, paddingTop: 4 }}>
+                    <Text
+                        style={[
+                            styles.sectionTitle,
+                            {
+                                margin: 8,
+                                marginLeft: 12,
+                                fontSize: 13,
+                                fontWeight: '400',
+                                color: menuTitle,
+                            },
+                        ]}
+                    >
+                        Resources
+                    </Text>
                     <View style={styles.sectionBody}>
-                        <View style={[styles.rowWrapper, styles.rowFirst]}>
+                        <View
+                            style={[
+                                {
+                                    paddingLeft: 16,
+                                    backgroundColor: '#fff',
+                                    borderColor: '#f0f0f0',
+                                    borderTopWidth: 1,
+                                },
+                                styles.rowFirst,
+                            ]}
+                        >
                             <TouchableOpacity
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={styles.row}
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
                             >
-                                <Text style={styles.rowLabel}>Contact Us</Text>
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
+                                    Contact Us
+                                </Text>
                                 <View style={styles.rowSpacer} />
-                                <SymbolView
+                                <Icono
                                     size={19}
-                                    name="chevron.right"
+                                    sfName="chevron.right"
+                                    DIName="chevron-right"
+                                    tintColor={menuTitle}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                paddingLeft: 16,
+                                backgroundColor: '#fff',
+                                borderColor: '#f0f0f0',
+                                borderTopWidth: 1,
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={() => {
+                                    // handle onPress
+                                }}
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor, fontSize: 16 },
+                                    ]}
+                                >
+                                    Report Bug
+                                </Text>
+                                <View style={styles.rowSpacer} />
+                                <Icono
+                                    size={19}
+                                    sfName="chevron.right"
+                                    DIName="chevron-right"
                                     tintColor={menuTitle}
                                     // color="#bcbcbc"
                                 />
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.rowWrapper}>
+                        <View
+                            style={{
+                                paddingLeft: 16,
+                                backgroundColor: '#fff',
+                                borderColor: '#f0f0f0',
+                                borderTopWidth: 1,
+                            }}
+                        >
                             <TouchableOpacity
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={styles.row}
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
                             >
-                                <Text style={styles.rowLabel}>Report Bug</Text>
-                                <View style={styles.rowSpacer} />
-                                <SymbolView
-                                    size={19}
-                                    name="chevron.right"
-                                    tintColor={menuTitle}
-                                    // color="#bcbcbc"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.rowWrapper}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    // handle onPress
-                                }}
-                                style={styles.row}
-                            >
-                                <Text style={styles.rowLabel}>
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor },
+                                    ]}
+                                >
                                     Rate in App Store
                                 </Text>
                                 <View style={styles.rowSpacer} />
-                                <SymbolView
+                                <Icono
                                     size={19}
-                                    name="chevron.right"
+                                    sfName="chevron.right"
+                                    DIName="chevron-right"
                                     tintColor={menuTitle}
                                     // color="#bcbcbc"
                                 />
                             </TouchableOpacity>
                         </View>
-                        <View style={[styles.rowWrapper, styles.rowLast]}>
+                        <View
+                            style={[
+                                {
+                                    paddingLeft: 16,
+                                    backgroundColor: '#fff',
+                                    borderColor: '#f0f0f0',
+                                    borderTopWidth: 1,
+                                },
+                                styles.rowLast,
+                            ]}
+                        >
                             <TouchableOpacity
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={styles.row}
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
                             >
-                                <Text style={styles.rowLabel}>
+                                <Text
+                                    style={[
+                                        styles.rowLabel,
+                                        { color: textColor },
+                                    ]}
+                                >
                                     Terms and Privacy
                                 </Text>
                                 <View style={styles.rowSpacer} />
-                                <SymbolView
+                                <Icono
                                     size={19}
-                                    name="chevron.right"
+                                    sfName="chevron.right"
+                                    DIName="chevron-right"
                                     tintColor={menuTitle}
-                                    // color="#bcbcbc"
                                 />
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
-                <View style={styles.section}>
+                <View style={{ paddingVertical: 12, paddingTop: 4 }}>
                     <View style={styles.sectionBody}>
                         <View
                             style={[
-                                styles.rowWrapper,
+                                {
+                                    paddingLeft: 16,
+                                    backgroundColor: '#fff',
+                                    borderColor: '#f0f0f0',
+                                    borderTopWidth: 1,
+                                },
                                 styles.rowFirst,
                                 styles.rowLast,
                                 { alignItems: 'center' },
@@ -517,12 +739,21 @@ export function ProfileScreen() {
                                 onPress={() => {
                                     signOut()
                                 }}
-                                style={styles.row}
+                                style={[
+                                    styles.row,
+                                    { paddingRight: 12, paddingVertical: 12 },
+                                ]}
                             >
                                 <Text
                                     style={[
                                         styles.rowLabel,
-                                        styles.rowLabelLogout,
+                                        {
+                                            color: textTertiaryColor,
+                                            fontWeight: '700',
+                                            textAlign: 'center',
+                                            alignContent: 'center',
+                                            width: '100%',
+                                        },
                                     ]}
                                 >
                                     Log Out
@@ -531,7 +762,9 @@ export function ProfileScreen() {
                         </View>
                     </View>
                 </View>
-                <Text style={styles.contentFooter}>Alfred version 2.00</Text>
+                <Text style={[styles.contentFooter, { color: menuTitle }]}>
+                    Alfred version 2.00
+                </Text>
             </ScrollView>
         </View>
     )

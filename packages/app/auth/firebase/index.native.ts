@@ -1,4 +1,6 @@
 // import auth from '@react-native-firebase/auth'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'solito/navigation'
 import {
     getAuth,
     OAuthProvider,
@@ -77,6 +79,44 @@ const onAuthStateChanged = (callback) =>
 
 const getCurrentUser = () => auth?.currentUser
 
+const useAuthState = () => {
+    const [initializing, setInitializing] = useState<boolean>(true)
+    const [authState, setAuthState] = useState<any>({
+        user: null,
+        state: 'initializing',
+    })
+    const router = useRouter()
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChangedFirebase(
+            auth,
+            (authUser: any) => {
+                if (typeof authUser === 'undefined' || authUser === null) return
+                if (initializing && authUser) {
+                    const valid =
+                        authUser?.email &&
+                        authUser?.uid &&
+                        !authUser?.isAnonymous
+                    setInitializing(false)
+                    setAuthState({
+                        user: authUser,
+                        state: valid ? 'authenticated' : 'unauthenticated',
+                    })
+                    console.log(
+                        '[ useAuthState :: OnAuthStateChanged :: user: ]',
+                        authUser,
+                    )
+                }
+            },
+        )
+
+        return () => unsubscribe()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [authState])
+
+    return authState
+}
+
 const sendPasswordResetEmail = (userEmail: string) => {
     return sendPasswordResetEmailFirebase(auth, userEmail)
 }
@@ -92,4 +132,5 @@ export {
     onAuthStateChanged,
     getCurrentUser,
     sendPasswordResetEmail,
+    useAuthState,
 }

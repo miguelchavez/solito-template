@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 // import { getAnalytics } from 'firebase/analytics'
@@ -15,6 +18,8 @@ import {
     GoogleAuthProvider,
     OAuthProvider,
     sendPasswordResetEmail as sendPasswordResetEmailFirebase,
+    User,
+    UserCredential,
 } from 'firebase/auth'
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -32,6 +37,16 @@ export const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
+interface AuthState {
+    user: User | null
+    state: string
+}
+
+const initialAuthState: AuthState = {
+    user: null,
+    state: 'loading',
+}
+
 // Initialize Firebase
 let auth: ReturnType<typeof initializeAuth>
 if (typeof window !== 'undefined') {
@@ -41,7 +56,6 @@ if (typeof window !== 'undefined') {
         popupRedirectResolver: browserPopupRedirectResolver,
     })
     auth.languageCode = 'es_419' // Latin america
-    // setPersistence(auth, browserSessionPersistence)
     // const analytics = getAnalytics(app)
 }
 
@@ -170,7 +184,7 @@ const createUserWithEmailAndPassword = (email: string, password: string) => {
         })
 }
 
-const onAuthStateChanged = (callback) => {
+const onAuthStateChanged = (callback: any) => {
     return onAuthStateChangedFirebase(auth, callback)
 }
 
@@ -178,6 +192,41 @@ const getCurrentUser = () => auth?.currentUser
 
 const sendPasswordResetEmail = (userEmail: string) => {
     return sendPasswordResetEmailFirebase(auth, userEmail)
+}
+
+const useAuthState = () => {
+    /**
+     * Auth States:
+     *      `loading`: Loading State, default.
+     *      `initializing`: onMount initialized authState change subscription
+     *      `authenticated`: Authentication pocess is finished, user is authenticated.
+     *      `unautenticated`: Authentication finished with error.
+     */
+    const [authState, setAuthState] = useState<AuthState>(initialAuthState)
+    const router = useRouter()
+
+    useEffect(() => {
+        if (authState?.state == 'loading') {
+            // We only subscribe when state is loading.
+            setAuthState({ user: null, state: 'initializing' }) // changing state to initialized
+            const unsubscribe = onAuthStateChanged((authUser: User | null) => {
+                const valid =
+                    authUser?.email && authUser?.uid && !authUser?.isAnonymous
+                setAuthState({
+                    user: authUser,
+                    state: valid ? 'authenticated' : 'unauthenticated',
+                })
+            })
+            return () => unsubscribe()
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }
+    }, [])
+
+    // useEffect(() => {
+    //     console.log('[ useAuthState :: onAuthStateChanged ]:', authState)
+    // }, [authState])
+
+    return authState
 }
 
 export {
@@ -191,4 +240,5 @@ export {
     onAuthStateChanged,
     getCurrentUser,
     sendPasswordResetEmail,
+    useAuthState,
 }

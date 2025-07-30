@@ -33,6 +33,16 @@ export function useThemeColor(
         getSettings()
     }, [])
 
+    // useEffect(() => {
+    //     if (isLoading) {
+    //         console.log(
+    //             `[ useThemeColor :: colorName: ${colorName} ]: Loading...`,
+    //         )
+    //     } else if (color) {
+    //         console.log(`[ useThemeColor :: colorName: ${colorName} ]:`, color)
+    //     }
+    // }, [isLoading, color])
+
     if (!isLoading && color) {
         return color
     }

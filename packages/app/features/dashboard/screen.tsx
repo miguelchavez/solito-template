@@ -1,16 +1,10 @@
 'use client'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti/app'
-import {
-    Text,
-    Button,
-    View,
-    StyleSheet,
-    useWindowDimensions,
-} from 'react-native'
+import { Text, Button, View, Platform, useWindowDimensions } from 'react-native'
 
 import { useState, useEffect } from 'react'
-import { getCurrentUser } from 'app/auth/firebase'
+import { useAuthState } from 'app/auth/firebase'
 import { useRouter } from 'solito/navigation'
 
 import { useThemeColor } from '@hooks/useThemeColor'
@@ -19,33 +13,21 @@ import { es } from 'date-fns/locale'
 import { formatDistanceToNow } from 'date-fns'
 
 export function HomeScreen() {
+    const { user, state } = useAuthState()
     const router = useRouter()
     const { width, height } = useWindowDimensions()
     const bgColor = useThemeColor('background')
-    const textColor = useThemeColor('text')
-    const linkColor = useThemeColor('tertiary')
+    const linkColor = useThemeColor('secondary')
+
     const [timeAgo, setTimeAgo] = useState('')
-
-    const styles = StyleSheet.create({
-        view: {
-            flex: 1,
-            padding: 16,
-            // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
-            gap: 32,
-            backgroundColor: bgColor,
-            color: textColor,
-        },
-    })
-
-    const user = getCurrentUser()
 
     /**
      * When Authentication state changes, get user login time
      */
     useEffect(() => {
-        if (user) {
+        if (user != null && state === 'authenticated') {
             const f = formatDistanceToNow(
-                new Date(user.metadata.lastSignInTime ?? ''),
+                new Date(user?.metadata?.lastSignInTime ?? ''),
                 {
                     addSuffix: true,
                     locale: es,
@@ -53,16 +35,25 @@ export function HomeScreen() {
             )
             setTimeAgo(f)
         }
-    }, [user])
+    }, [user, state])
 
     return (
-        <View style={styles.view}>
-            {/* className="p-10 m-50" */}
+        <View
+            style={{
+                flex: 1,
+                padding: 16,
+                gap: 32,
+                // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
+                // alignItems: 'center',
+                // justifyContent: 'center',
+                width: '100dvw', //'100vw',
+                height: '100dvh', //'100vh',
+                flexDirection: 'column',
+                backgroundColor: bgColor,
+            }}
+        >
             <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
-            <View className="underline bg-orange-400">
-                <Text className="text-2xl font-bold underline bg-rose-300 rounded-sm">
-                    This is A Solito Template App.
-                </Text>
+            <View>
                 <P style={{ color: '#000' }}>
                     Your last session is from {timeAgo}
                 </P>
@@ -102,7 +93,9 @@ export function HomeScreen() {
                         duration: 150,
                     }}
                 >
-                    <P selectable={false}>View Profile</P>
+                    <P selectable={false} style={{ color: linkColor }}>
+                        View Profile
+                    </P>
                 </MotiLink>
                 <Button
                     title="Open Modal"
@@ -118,10 +111,10 @@ const H1 = ({ children }: { children: React.ReactNode }) => {
     return (
         <Text
             style={{
+                fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
+                fontWeight: 'bold',
                 color: textColor,
                 textAlign: 'center',
-                fontFamily: 'Inter',
-                fontWeight: '800',
                 fontSize: 26,
             }}
         >
@@ -141,16 +134,16 @@ const P = ({
     style?: any
     selectable?: boolean
 }) => {
-    const linkColor = useThemeColor('secondary')
+    const textColor = useThemeColor('text') // default text color
     return (
         <Text
             selectable={selectable}
             style={{
-                fontFamily: 'Inter',
-                textAlign: 'justify',
-                color: linkColor,
+                color: textColor,
                 fontSize: 18,
-                ...style,
+                fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
+                textAlign: 'justify',
+                ...style, // override style passed in props
             }}
             {...props}
         >

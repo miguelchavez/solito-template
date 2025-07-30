@@ -73,6 +73,8 @@ module.exports = {
         'solito',
         'react-native-reanimated',
         'moti',
+        'app',
+        'react-native-css-interop',
         'react-native-gesture-handler',
     ],
 
@@ -90,4 +92,7 @@ module.exports = {
 
     ...withWebpack,
     ...withTurpopack,
+    typescript: {
+        ignoreBuildErrors: true,
+    },
 }

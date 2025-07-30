@@ -40,6 +40,10 @@ It is organized in different branches, containing each one a set of libraries fo
 
 For more, see the [compatibility docs](https://solito.dev/compatibility).
 
+# Tailwind + shadcn
+
+https://matinkhani.medium.com/create-a-turborepo-with-nextjs-tailwindcss-shadcn-6e6ecfd52aea
+
 ## 🗂 Folder layout
 
 -   `apps` entry points for each app

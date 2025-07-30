@@ -2,64 +2,43 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-// import { useRouter } from 'next/router'
-import { getCurrentUser } from 'app/auth/firebase'
-// import { View } from 'react-native'
-// import { MotiLink } from 'solito/moti/app'
-import { HomeScreen } from 'app/features/home/screen'
+import { useAuthState } from 'app/auth/firebase'
 
-const Home = () => {
-    const user = getCurrentUser()
+import { SolitoImage } from 'solito/image'
+import logo from '@assets/images/icon.png'
+
+const Main = () => {
+    const { user, state } = useAuthState()
     const router = useRouter()
+
     /**
      * When Authentication state changes, navigate to (tabs) home screen
      */
     useEffect(() => {
-        if (user) {
-            console.log('[ auth :: user ]:', user)
-        } else {
-            console.log('[ NOT AUTHENTICATED! ]')
-            router.replace('/login')
+        if (user == null && state === 'unauthenticated') {
+            // If not authenticated, redirect to login.
+            router.push('/login')
+        } else if (user != null && state === 'authenticated') {
+            router.push('/dashboard')
         }
-    }, [])
-
-    if (!user) {
-        return null
-    }
+    }, [user, state])
 
     return (
-        <div className="m-8 p-8 flex-1 text-2xl bg-rose-100 rounded-lg">
-            <HomeScreen />
+        <div className="flex h-full w-full self-center items-center justify-center bg-purple-400 animate-pulse">
+            <SolitoImage
+                alt="Logo"
+                src={logo}
+                unoptimized
+                contentPosition="center"
+                contentFit="cover"
+                style={{
+                    alignSelf: 'center',
+                    height: '100dvh', // '100vh',
+                    width: '100dvw', // '100vw',
+                }}
+            />
         </div>
     )
-    // return (
-    //     <View className="m-10 p-10 flex-1 text-2xl underline bg-rose-300 rounded-sm">
-    //         <p className="text-2xl font-bold underline bg-rose-300 rounded-sm">
-    //             This is A Solito Template App.
-    //         </p>
-    //         <MotiLink
-    //             href="/(tabs)/profile"
-    //             from={{
-    //                 scale: 0,
-    //                 rotateZ: '0deg',
-    //             }}
-    //             animate={({ hovered, pressed }) => {
-    //                 'worklet'
-
-    //                 return {
-    //                     scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-    //                     rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-    //                 }
-    //             }}
-    //             transition={{
-    //                 type: 'timing',
-    //                 duration: 150,
-    //             }}
-    //         >
-    //             <p>View Profile</p>
-    //         </MotiLink>
-    //     </View>
-    // )
 }
 
-export default Home
+export default Main

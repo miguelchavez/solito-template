@@ -13,7 +13,7 @@
     },
     "scripts": {
         "native": "cd apps/expo && yarn start --dev-client",
-        "web": "cd apps/next && yarn next"
+        "web": "cd apps/next && yarn next --turbo"
     },
     "packageManager": "yarn@4.7.0",
     "eslintConfig": {
