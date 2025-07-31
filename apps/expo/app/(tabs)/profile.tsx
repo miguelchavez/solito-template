@@ -2,16 +2,19 @@
 import { View } from 'react-native'
 // import { useParams } from 'solito/navigation'
 // import { Redirect } from 'expo-router'
-// import { getCurrentUser } from 'app/auth/firebase'
+// import { useAuthState } from 'app/auth/firebase'
 
 import { ProfileScreen } from 'app/features/profile/screen'
 import { useThemeColor } from '@hooks/useThemeColor'
 
 export default function Profile() {
-    // const user = getCurrentUser()
+    // const { user, state } = useAuthState()
     const bgColor = useThemeColor('background')
 
-    // if (typeof user === 'undefined' || user == null || !user) {
+    // if (user == null && state == 'unauthenticated') {
+    //     console.log(
+    //         '[ Home :: User is not authenticated Redirecting to Login screen ]',
+    //     )
     //     return <Redirect href="/(auth)/login" />
     // }
 

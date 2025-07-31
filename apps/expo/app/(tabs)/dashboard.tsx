@@ -5,11 +5,11 @@ import { BlurView } from 'expo-blur'
 import { HomeScreen } from 'app/features/dashboard/screen'
 import { useThemeColor } from '@hooks/useThemeColor'
 // import { useParams } from 'solito/navigation'
-import { Redirect } from 'expo-router'
-import { useAuthState } from 'app/auth/firebase'
+// import { Redirect } from 'expo-router'
+// import { useAuthState } from 'app/auth/firebase'
 
 export default function Home() {
-    const { user, state } = useAuthState()
+    // const { user, state } = useAuthState()
     const bgColor = useThemeColor('background')
     // const styles = StyleSheet.create({
     //     view: {
@@ -24,15 +24,11 @@ export default function Home() {
     //     },
     // })
 
-    // if (user == null && state === 'initializing') {
-    //     // `initializing` means `I am just initializing and not asked for authentication `
+    // if (user == null && state == 'unauthenticated') {
     //     console.log(
     //         '[ Home :: User is not authenticated Redirecting to Login screen ]',
     //     )
     //     return <Redirect href="/(auth)/login" />
-    // } else {
-    //     // Wnen User is -whatever- and initializing is true, the user value is not valid, so it is still loading, do not redirect
-    //     return
     // }
 
     return (
