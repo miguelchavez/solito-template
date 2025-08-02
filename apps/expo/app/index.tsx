@@ -52,7 +52,6 @@ export default function Home() {
             flexDirection: 'row',
             alignItems: 'flex-end',
             justifyContent: 'center',
-            backgroundColor: lightBackground,
         },
         view: {
             flex: 1,
@@ -65,50 +64,22 @@ export default function Home() {
         },
         blurContainer: {
             flex: 1,
-            padding: 20,
-            textAlign: 'center',
-            justifyContent: 'center',
             overflow: 'hidden',
             borderRadius: 10,
         },
-        texto: {
-            fontSize: 16,
-            fontFamily: 'Inter',
-            color: textColor,
-        },
         content: {
             flex: 1,
-            maxWidth: width > 900 ? '60%' : '100%',
             height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
             textAlign: 'justify',
-            backgroundColor: width > 900 ? softBackground : lightBackground,
-            padding: 20,
-        },
-        innerContent: {
-            flex: 1,
-            paddingTop: 20,
-        },
-        button: {
-            marginTop: 20,
         },
         logo: {
             flex: 1,
-            height: height * 0.6,
-            width: width * 0.7,
             top: 0,
             alignSelf: 'center',
         },
-        logoSmall: {
-            width: width,
-            height: IMG_HEIGHT,
-        },
         title: {
-            fontFamily: 'Inter',
-            fontSize: 34,
-            color: tintColor,
-            fontWeight: 'bold',
             height: 50,
             width: '100%',
             textAlign: 'center',
@@ -182,19 +153,46 @@ export default function Home() {
     })
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: lightBackground }]}>
             {width > 900 && (
                 <View style={styles.logoContainer}>
                     <Image
                         source={require('@assets/images/icon.png')}
                         resizeMode="center" // contain cover stretch
-                        style={styles.logo}
+                        style={[
+                            styles.logo,
+                            { height: height * 0.6, width: width * 0.7 },
+                        ]}
                     />
                 </View>
             )}
-            <View style={styles.content}>
-                {/* <Animated.Text style={[styles.title, headerAnimatedStyle]}> */}
-                <Text style={styles.title}>Welcome</Text>
+            <View
+                style={[
+                    styles.content,
+                    {
+                        padding: 20,
+                        maxWidth: width > 900 ? '60%' : '100%',
+                        backgroundColor:
+                            width > 900 ? softBackground : lightBackground,
+                    },
+                ]}
+            >
+                {/* <Animated.Text style={[styles.title, {fontFamily: 'Inter',
+            fontSize: 34,
+            fontWeight: 'bold',color: tintColor}, headerAnimatedStyle]}> */}
+                <Text
+                    style={[
+                        styles.title,
+                        {
+                            fontFamily: 'Inter',
+                            fontSize: 34,
+                            fontWeight: 'bold',
+                            color: tintColor,
+                        },
+                    ]}
+                >
+                    Welcome
+                </Text>
                 {/* </Animated.Text> */}
                 <View style={styles.view}>
                     <Animated.ScrollView
@@ -204,21 +202,37 @@ export default function Home() {
                         {width < 900 && (
                             <Animated.Image
                                 source={require('@assets/images/icon.png')}
-                                style={[styles.logoSmall, imageAnimatedStyle]}
+                                style={[
+                                    { width: width, height: IMG_HEIGHT },
+                                    imageAnimatedStyle,
+                                ]}
                             />
                         )}
-                        <View style={styles.innerContent}>
+                        <View style={{ flex: 1, paddingTop: 20 }}>
                             <BlurView
                                 intensity={80}
                                 tint="light"
-                                style={styles.blurContainer}
+                                style={[
+                                    styles.blurContainer,
+                                    {
+                                        padding: 20,
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                    },
+                                ]}
                             >
-                                <Text style={styles.texto}>
+                                <Text
+                                    style={{
+                                        fontSize: 16,
+                                        fontFamily: 'Inter',
+                                        color: textColor,
+                                    }}
+                                >
                                     By continuing, you are agree to the License
                                     Terms and conditions.
                                 </Text>
                             </BlurView>
-                            <View style={styles.button}>
+                            <View style={{ marginTop: 20 }}>
                                 <Button
                                     title="Continue"
                                     onPress={() => handleSettingsUpdate('true')}

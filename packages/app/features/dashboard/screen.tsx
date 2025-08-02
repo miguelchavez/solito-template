@@ -1,7 +1,10 @@
 'use client'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti/app'
-import { Text, Button, View, Platform, useWindowDimensions } from 'react-native'
+import { Text, View, Platform, useWindowDimensions } from 'react-native'
+
+// import { Button } from '../../components/buttons'
+import { MyButton } from 'app/components/buttons'
 
 import { useState, useEffect } from 'react'
 import { useAuthState } from 'app/auth/firebase'
@@ -18,6 +21,10 @@ export function HomeScreen() {
     const { width, height } = useWindowDimensions()
     const bgColor = useThemeColor('background')
     const linkColor = useThemeColor('secondary')
+    const textColor = useThemeColor('text')
+    const textSecondaryColor = useThemeColor('secondaryTextColor')
+    const textTertiaryColor = useThemeColor('tertiaryTextColor')
+    const softWhite = useThemeColor('softWhite')
 
     const [timeAgo, setTimeAgo] = useState('')
 
@@ -54,10 +61,10 @@ export function HomeScreen() {
         >
             <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
             <View>
-                <P style={{ color: '#000' }}>
+                <P style={{ color: textColor }}>
                     Your last session is from {timeAgo}
                 </P>
-                <P>
+                <P style={{ color: textColor }}>
                     Solito is made by{' '}
                     <TextLink
                         href="https://twitter.com/fernandotherojo"
@@ -97,9 +104,11 @@ export function HomeScreen() {
                         View Profile
                     </P>
                 </MotiLink>
-                <Button
+                <MyButton
                     title="Open Modal"
-                    onPress={() => router.push('/exampleModal')}
+                    onPress={() => {
+                        router.push('/exampleModal')
+                    }}
                 />
             </View>
         </View>

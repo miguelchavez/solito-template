@@ -1,3 +1,4 @@
+'use client'
 import { useRouter } from 'solito/navigation'
 import { View, Text, Platform, useWindowDimensions } from 'react-native'
 

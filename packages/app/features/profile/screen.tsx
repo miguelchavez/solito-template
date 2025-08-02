@@ -23,7 +23,7 @@ import { SettingsContext } from 'app/providers/settingsContextProvider'
 
 import SidebarTabletSwitch from 'app/components/sidebarTabletSwitch'
 
-import { es } from 'date-fns/locale'
+import { bg, es } from 'date-fns/locale'
 import {
     format,
     formatDistanceToNow,
@@ -38,6 +38,8 @@ export function ProfileScreen() {
     const { settings, updateSettings } = useContext(SettingsContext)
     const menuTitle = useThemeColor('menuTitleColor')
     const bgColor = useThemeColor('background')
+    const softBgColor = useThemeColor('softBackground')
+    const lightBgColor = useThemeColor('lightBackground')
     const textColor = useThemeColor('text')
     const textSecondaryColor = useThemeColor('secondaryTextColor')
     const textTertiaryColor = useThemeColor('tertiaryTextColor')
@@ -211,7 +213,12 @@ export function ProfileScreen() {
             }}
         >
             <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
-                <View style={{ paddingVertical: 12, paddingTop: 4 }}>
+                <View
+                    style={{
+                        paddingVertical: 12,
+                        paddingTop: 4,
+                    }}
+                >
                     <Text
                         style={[
                             styles.sectionTitle,
@@ -234,9 +241,9 @@ export function ProfileScreen() {
                             style={[
                                 styles.profile,
                                 {
-                                    backgroundColor: '#fff',
                                     padding: 12,
                                     marginTop: 10,
+                                    backgroundColor: softWhite,
                                 },
                             ]}
                         >
@@ -309,13 +316,18 @@ export function ProfileScreen() {
                     >
                         Preferences
                     </Text>
-                    <View style={styles.sectionBody}>
+                    <View
+                        style={[
+                            styles.sectionBody,
+                            { backgroundColor: softWhite },
+                        ]}
+                    >
                         <View
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    backgroundColor: '#fff',
-                                    borderColor: '#f0f0f0',
+                                    // backgroundColor: '#fff',
+                                    borderColor: softWhite, //'#f0f0f0',
                                     borderTopWidth: 1,
                                 },
                                 styles.rowFirst,
@@ -363,8 +375,8 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                backgroundColor: '#fff',
-                                borderColor: '#f0f0f0',
+                                // backgroundColor: '#fff',
+                                borderColor: softWhite, //'#f0f0f0',
                                 borderTopWidth: 1,
                             }}
                         >
@@ -394,8 +406,8 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                backgroundColor: '#fff',
-                                borderColor: '#f0f0f0',
+                                // backgroundColor: '#fff',
+                                borderColor: softWhite, //'#f0f0f0',
                                 borderTopWidth: 1,
                             }}
                         >
@@ -438,8 +450,8 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                backgroundColor: '#fff',
-                                borderColor: '#f0f0f0',
+                                // backgroundColor: '#fff',
+                                borderColor: softWhite, // '#f0f0f0',
                                 borderTopWidth: 1,
                             }}
                         >
@@ -482,8 +494,8 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                backgroundColor: '#fff',
-                                borderColor: '#f0f0f0',
+                                // backgroundColor: '#fff',
+                                borderColor: softWhite, //'#f0f0f0',
                                 borderTopWidth: 1,
                             }}
                         >
@@ -520,8 +532,8 @@ export function ProfileScreen() {
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    backgroundColor: '#fff',
-                                    borderColor: '#f0f0f0',
+                                    // backgroundColor: '#fff',
+                                    borderColor: softWhite, //'#f0f0f0',
                                     borderTopWidth: 1,
                                 },
                                 styles.rowLast,
@@ -573,13 +585,18 @@ export function ProfileScreen() {
                     >
                         Resources
                     </Text>
-                    <View style={styles.sectionBody}>
+                    <View
+                        style={[
+                            styles.sectionBody,
+                            { backgroundColor: softWhite },
+                        ]}
+                    >
                         <View
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    backgroundColor: '#fff',
-                                    borderColor: '#f0f0f0',
+                                    // backgroundColor: '#fff',
+                                    borderColor: softWhite, //'#f0f0f0',
                                     borderTopWidth: 1,
                                 },
                                 styles.rowFirst,
@@ -614,8 +631,8 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                backgroundColor: '#fff',
-                                borderColor: '#f0f0f0',
+                                // backgroundColor: '#fff',
+                                borderColor: softWhite, //'#f0f0f0',
                                 borderTopWidth: 1,
                             }}
                         >
@@ -649,8 +666,8 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                backgroundColor: '#fff',
-                                borderColor: '#f0f0f0',
+                                // backgroundColor: '#fff',
+                                borderColor: softWhite, //'#f0f0f0',
                                 borderTopWidth: 1,
                             }}
                         >
@@ -685,8 +702,8 @@ export function ProfileScreen() {
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    backgroundColor: '#fff',
-                                    borderColor: '#f0f0f0',
+                                    // backgroundColor: '#fff',
+                                    borderColor: softWhite, //'#f0f0f0',
                                     borderTopWidth: 1,
                                 },
                                 styles.rowLast,
@@ -721,13 +738,18 @@ export function ProfileScreen() {
                     </View>
                 </View>
                 <View style={{ paddingVertical: 12, paddingTop: 4 }}>
-                    <View style={styles.sectionBody}>
+                    <View
+                        style={[
+                            styles.sectionBody,
+                            { backgroundColor: softWhite },
+                        ]}
+                    >
                         <View
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    backgroundColor: '#fff',
-                                    borderColor: '#f0f0f0',
+                                    // backgroundColor: '#fff',
+                                    borderColor: softWhite, //'#f0f0f0',
                                     borderTopWidth: 1,
                                 },
                                 styles.rowFirst,
@@ -763,7 +785,7 @@ export function ProfileScreen() {
                     </View>
                 </View>
                 <Text style={[styles.contentFooter, { color: menuTitle }]}>
-                    Alfred version 2.00
+                    Solito Template
                 </Text>
             </ScrollView>
         </View>
