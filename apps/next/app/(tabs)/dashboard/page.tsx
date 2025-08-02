@@ -5,9 +5,6 @@ import { useRouter } from 'next/navigation'
 import { useAuthState } from 'app/auth/firebase'
 import { HomeScreen } from 'app/features/dashboard/screen'
 
-import { SolitoImage } from 'solito/image'
-import logo from '@assets/images/icon.png'
-
 const Home = () => {
     const { user, state } = useAuthState()
     const router = useRouter()
