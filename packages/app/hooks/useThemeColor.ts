@@ -33,6 +33,18 @@ export function useThemeColor(
         getSettings()
     }, [])
 
+    useEffect(() => {
+        const getSettings = async () => {
+            const userTheme = await useSettings('THEME')
+            const theme =
+                userTheme && userTheme === 'system' ? systemTheme : userTheme
+
+            setIsLoading(false)
+            setColor(Colors[theme][colorName])
+        }
+        getSettings()
+    }, [systemTheme])
+
     // useEffect(() => {
     //     if (isLoading) {
     //         console.log(
