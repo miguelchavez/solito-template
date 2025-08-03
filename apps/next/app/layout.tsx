@@ -1,6 +1,5 @@
-// import AuthLayout from '@/components/authLayout'
 import { StylesProvider } from './styles-provider'
-// import clsx from 'clsx'
+import { ThemeProvider } from '@/lib/components/themeProvider'
 import '@/styles/globals.css'
 
 export const metadata = {
@@ -23,7 +22,14 @@ export default function RootLayout({
                 )}
             </head>
             <body className="min-h-screen bg-background text-base antialiased">
-                <StylesProvider>{children}</StylesProvider>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <StylesProvider>{children}</StylesProvider>
+                </ThemeProvider>
             </body>
         </html>
     )

@@ -1,9 +1,9 @@
 'use client'
+
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti/app'
 import { Text, View, Platform, useWindowDimensions } from 'react-native'
 
-// import { Button } from '../../components/buttons'
 import { MyButton } from 'app/components/buttons'
 
 import { useState, useEffect } from 'react'
@@ -12,7 +12,7 @@ import { useRouter } from 'solito/navigation'
 
 import { useThemeColor } from '@hooks/useThemeColor'
 
-import { es } from 'date-fns/locale'
+import { enUS, es } from 'date-fns/locale'
 import { formatDistanceToNow } from 'date-fns'
 
 export function HomeScreen() {
@@ -22,9 +22,10 @@ export function HomeScreen() {
     const bgColor = useThemeColor('background')
     const linkColor = useThemeColor('secondary')
     const textColor = useThemeColor('text')
-    const textSecondaryColor = useThemeColor('secondaryTextColor')
+    // const textSecondaryColor = useThemeColor('secondaryTextColor')
     const textTertiaryColor = useThemeColor('tertiaryTextColor')
-    const softWhite = useThemeColor('softWhite')
+    // const softWhite = useThemeColor('softWhite')
+    // const tintColor = useThemeColor('tint')
 
     const [timeAgo, setTimeAgo] = useState('')
 
@@ -37,12 +38,16 @@ export function HomeScreen() {
                 new Date(user?.metadata?.lastSignInTime ?? ''),
                 {
                     addSuffix: true,
-                    locale: es,
+                    locale: enUS, // es
                 },
             )
             setTimeAgo(f)
         }
     }, [user, state])
+
+    if (user == null && state === 'unauthenticated') {
+        return null
+    }
 
     return (
         <View
@@ -51,20 +56,19 @@ export function HomeScreen() {
                 padding: 16,
                 gap: 32,
                 // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
-                // alignItems: 'center',
-                // justifyContent: 'center',
-                width: '100dvw', //'100vw',
-                height: '100dvh', //'100vh',
+                width: '100%', // '100dvw', //'100vw',
+                height: '100%', // '100dvh', //'100vh',
                 flexDirection: 'column',
                 backgroundColor: bgColor,
             }}
+            className="w-3/4 h-3/4"
         >
             <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
             <View>
-                <P style={{ color: textColor }}>
+                <Text style={{ color: textColor, fontSize: 30 }}>
                     Your last session is from {timeAgo}
-                </P>
-                <P style={{ color: textColor }}>
+                </Text>
+                <Text style={{ color: textColor }}>
                     Solito is made by{' '}
                     <TextLink
                         href="https://twitter.com/fernandotherojo"
@@ -74,7 +78,7 @@ export function HomeScreen() {
                     >
                         Fernando Rojo
                     </TextLink>
-                </P>
+                </Text>
             </View>
             <View style={{ flexDirection: 'row', gap: 16 }}>
                 <MotiLink
@@ -100,9 +104,9 @@ export function HomeScreen() {
                         duration: 150,
                     }}
                 >
-                    <P selectable={false} style={{ color: linkColor }}>
+                    <Text selectable={false} style={{ color: linkColor }}>
                         View Profile
-                    </P>
+                    </Text>
                 </MotiLink>
                 <MyButton
                     title="Open Modal"
@@ -144,6 +148,7 @@ const P = ({
     selectable?: boolean
 }) => {
     const textColor = useThemeColor('text') // default text color
+    console.log(`Style for ${children} :`, style, 'themeColor TEXT:', textColor)
     return (
         <Text
             selectable={selectable}
@@ -152,7 +157,7 @@ const P = ({
                 fontSize: 18,
                 fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
                 textAlign: 'justify',
-                ...style, // override style passed in props
+                // ...style, // override style passed in props
             }}
             {...props}
         >

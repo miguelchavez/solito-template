@@ -17,13 +17,14 @@ import { signOut } from 'app/auth/firebase'
 import { useAuthState } from 'app/auth/firebase'
 
 import { useThemeColor } from '@hooks/useThemeColor'
+import { useTheme } from 'next-themes'
 
 import { useContext } from 'react'
 import { SettingsContext } from 'app/providers/settingsContextProvider'
 
 import SidebarTabletSwitch from 'app/components/sidebarTabletSwitch'
 
-import { bg, es } from 'date-fns/locale'
+import { enUS, es } from 'date-fns/locale'
 import {
     format,
     formatDistanceToNow,
@@ -34,6 +35,7 @@ import {
 
 export function ProfileScreen() {
     const router = useRouter()
+    const { setTheme } = useTheme() // for tailwind/shadcn
     const { user, state } = useAuthState()
     const { settings, updateSettings } = useContext(SettingsContext)
     const menuTitle = useThemeColor('menuTitleColor')
@@ -167,6 +169,7 @@ export function ProfileScreen() {
 
     useEffect(() => {
         // If bigIcons or darkmode or device changes, update the settings on the context, and save it to AsyncStorage
+        setTheme(darkmode ? 'dark' : 'light') // for tailwind/shadcn
         handleSettingsUpdate()
     }, [bigIcons, darkmode, device])
 
@@ -188,7 +191,7 @@ export function ProfileScreen() {
                 new Date(user?.metadata?.lastSignInTime ?? ''),
                 {
                     addSuffix: true,
-                    locale: es,
+                    locale: enUS,
                 },
             )
             setTimeAgo(f)

@@ -3,7 +3,7 @@
  * https://docs.expo.dev/guides/color-schemes/
  */
 
-import { useColorScheme } from 'react-native' //'./useColorScheme'
+import { useColorScheme } from './useColorScheme'
 import { Colors } from '@utils/constants/colors'
 import useSettings from './useSettings'
 import { useEffect, useState } from 'react'
@@ -29,31 +29,13 @@ export function useThemeColor(
 
             setIsLoading(false)
             setColor(Colors[theme][colorName])
-        }
-        getSettings()
-    }, [])
-
-    useEffect(() => {
-        const getSettings = async () => {
-            const userTheme = await useSettings('THEME')
-            const theme =
-                userTheme && userTheme === 'system' ? systemTheme : userTheme
-
-            setIsLoading(false)
-            setColor(Colors[theme][colorName])
+            console.log(
+                `${theme?.toUpperCase()} :: Color for ${colorName} is:`,
+                Colors[theme][colorName],
+            )
         }
         getSettings()
     }, [systemTheme])
-
-    // useEffect(() => {
-    //     if (isLoading) {
-    //         console.log(
-    //             `[ useThemeColor :: colorName: ${colorName} ]: Loading...`,
-    //         )
-    //     } else if (color) {
-    //         console.log(`[ useThemeColor :: colorName: ${colorName} ]:`, color)
-    //     }
-    // }, [isLoading, color])
 
     if (!isLoading && color) {
         return color

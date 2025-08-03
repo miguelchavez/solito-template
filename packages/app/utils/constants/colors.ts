@@ -33,6 +33,7 @@ export const Colors = {
         secondary: '#0E7AFE', // apple blue
         tertiary: '#FF5A5F',
         text: '#11181C',
+        texto: 'red', //'#11181C',
         background: '#EAEAEA', // #D4C4F4  #FF85FF #CFB8FC #DAB8FC
         tint: tintColorLight,
         icon: '#d5c5ff', // #d5c5ff #687076
@@ -57,6 +58,7 @@ export const Colors = {
         secondary: '#00BFFF',
         tertiary: '#FF5A5F',
         text: '#ECEDEE', // #ECEDEE #FAC3F2
+        texto: 'green',
         background: '#202020', //#202020 #323637
         tint: tintColorDark,
         icon: '#9BA1A6', // #9BA1A6
