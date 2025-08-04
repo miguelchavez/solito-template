@@ -29,10 +29,10 @@ export function useThemeColor(
 
             setIsLoading(false)
             setColor(Colors[theme][colorName])
-            console.log(
-                `${theme?.toUpperCase()} :: Color for ${colorName} is:`,
-                Colors[theme][colorName],
-            )
+            // console.log(
+            //     `${theme?.toUpperCase()} :: Color for ${colorName} is:`,
+            //     Colors[theme][colorName],
+            // )
         }
         getSettings()
     }, [systemTheme])
