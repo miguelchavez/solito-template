@@ -202,8 +202,8 @@ export function ProfileScreen() {
         <View
             style={{
                 flex: 1,
-                width: '100dvw', //'100vw',  No esta aceotando 'dvw' como unidad!
-                height: '100dvh', //'100vh',
+                width: '100%', // '100dvw', //'100vw',   No esta aceotando 'dvw' como unidad!
+                height: '100%', // '100dvh', //'100vh',
                 padding: 14,
                 paddingLeft: 24,
                 paddingRight: 24,

@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthState } from 'app/auth/firebase'
-
 import { ProfileScreen } from 'app/features/profile/screen'
 import { useThemeColor } from '@hooks/useThemeColor'
 
@@ -25,16 +24,7 @@ export default function Profile() {
     }, [user, state])
 
     if (user != null && state == 'authenticated') {
-        return (
-            <div
-                style={{
-                    flex: 1,
-                    backgroundColor: bgColor, // Added background color
-                }}
-            >
-                <ProfileScreen />
-            </div>
-        )
+        return <ProfileScreen />
     } else if (user == null && state == 'initializing') {
         return null
     }
