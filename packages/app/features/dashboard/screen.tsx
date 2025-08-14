@@ -20,12 +20,8 @@ export function HomeScreen() {
     const router = useRouter()
     const { width, height } = useWindowDimensions()
     const bgColor = useThemeColor('background')
-    const linkColor = useThemeColor('secondary')
+    const linkColor = useThemeColor('primary')
     const textColor = useThemeColor('text')
-    // const textSecondaryColor = useThemeColor('secondaryTextColor')
-    const textTertiaryColor = useThemeColor('tertiaryTextColor')
-    // const softWhite = useThemeColor('softWhite')
-    // const tintColor = useThemeColor('tint')
 
     const [timeAgo, setTimeAgo] = useState('')
 

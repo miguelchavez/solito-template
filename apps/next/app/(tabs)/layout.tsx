@@ -33,8 +33,8 @@ export default function TabsLayout({
             }
         >
             <AppSidebar />
-            <SidebarInset>
-                <header className="bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4">
+            <SidebarInset className="overflow-x-hidden">
+                <header className="sticky z-1 top-0 flex shrink-0 items-center gap-2 border-b  border-header bg-header-main/70  backdrop-blur-sm p-4">
                     <SidebarTrigger className="-ml-1" />
                     <Separator
                         orientation="vertical"
@@ -56,10 +56,10 @@ export default function TabsLayout({
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4">
                     {children}
-                    {Array.from({ length: 4 }).map((_, index) => (
+                    {Array.from({ length: 14 }).map((_, index) => (
                         <div
                             key={index}
-                            className="bg-muted/50 aspect-video h-12 w-full rounded-lg"
+                            className="bg-muted aspect-video h-12 w-full rounded-lg"
                         />
                     ))}
                 </div>

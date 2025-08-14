@@ -23,6 +23,7 @@ import { useRouter } from 'solito/navigation'
 import { useThemeColor } from '@hooks/useThemeColor'
 
 import logo from '@assets/images/icon.png'
+import '@assets/globals.css'
 
 export default function LoginScreen() {
     const auth = useFirebaseAuth()
@@ -32,6 +33,8 @@ export default function LoginScreen() {
     // const bgSidebarColor = useThemeColor('sidebarBackground')
     // const bgLightBackground = useThemeColor('lightBackground')
     // const bgSoftWhiteColor = useThemeColor('softWhite')
+
+    const bgColor = useThemeColor('loginBackground')
     const softWhite = useThemeColor('softWhite')
     const softBackground = useThemeColor('softBackground')
     const lightBackground = useThemeColor('lightBackground')
@@ -39,7 +42,6 @@ export default function LoginScreen() {
     const secondaryButtonColor = useThemeColor('secondaryButtonColor')
     const tintColor = useThemeColor('tint')
     const textColor = useThemeColor('text')
-    const textButton = useThemeColor('textButton')
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -113,7 +115,7 @@ export default function LoginScreen() {
                 width: '100dvw', //'100vw',
                 height: '100dvh', //'100vh',
                 flexDirection: 'row',
-                backgroundColor: lightBackground,
+                backgroundColor: bgColor,
             }}
         >
             {/* Show left side with logo for wide screens, hide for phones */}
@@ -146,8 +148,8 @@ export default function LoginScreen() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     paddingHorizontal: 30,
-                    backgroundColor:
-                        width > 900 ? softBackground : lightBackground,
+                    backgroundColor: bgColor,
+                    // width > 900 ? softBackground : lightBackground,
                 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 keyboardVerticalOffset={20}
@@ -226,7 +228,7 @@ export default function LoginScreen() {
                         padding: 20,
                         borderRadius: 10,
                         alignItems: 'center',
-                        backgroundColor: secondaryButtonColor,
+                        backgroundColor: buttonColor,
                     }}
                     onPress={handleLogin}
                 >
@@ -234,7 +236,7 @@ export default function LoginScreen() {
                         style={{
                             fontSize: 16,
                             fontWeight: 'bold',
-                            color: textButton,
+                            color: softWhite,
                         }}
                     >
                         Log In

@@ -7,17 +7,31 @@ import { Switch } from 'react-native'
 
 type SidebarTabletSwitchProps = {
     value: boolean
+    disabled?: boolean
     onToggle: () => void
 }
 
 const SidebarTabletSwitch: React.FC<SidebarTabletSwitchProps> = ({
     value,
+    disabled,
     onToggle,
 }) => {
     return (
         <Switch
+            disabled={disabled ?? false}
             value={value}
-            disabled={true}
+            onValueChange={(value) => {
+                console.log('onValueChange', value)
+                onToggle()
+            }}
+            onClick={() => {
+                console.log('onClick')
+                onToggle()
+            }}
+            onChange={() => {
+                console.log('onChange')
+                onToggle()
+            }}
             style={{
                 transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }],
             }}

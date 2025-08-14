@@ -9,11 +9,13 @@ import { Switch } from 'react-native'
 
 type SidebarTabletSwitchProps = {
     value: boolean
+    disabled?: boolean
     onToggle: () => void
 }
 
 const SidebarTabletSwitch: React.FC<SidebarTabletSwitchProps> = ({
     value,
+    disabled,
     onToggle,
 }) => {
     const [isPhone, setIsPhone] = useState(false)
@@ -30,7 +32,7 @@ const SidebarTabletSwitch: React.FC<SidebarTabletSwitchProps> = ({
     return (
         <Switch
             value={value}
-            disabled={isPhone}
+            disabled={disabled && isPhone}
             onChange={onToggle}
             style={{
                 transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }],

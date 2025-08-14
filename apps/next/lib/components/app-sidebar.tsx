@@ -1,6 +1,5 @@
 'use client'
 
-import * as React from 'react'
 import { ArchiveX, Command, File, Inbox, Send, Trash2 } from 'lucide-react'
 
 import { NavUser } from '@components/nav-user'
@@ -20,13 +19,11 @@ import {
 } from '@components/ui/sidebar'
 import { Switch } from '@components/ui/switch'
 
+import { useAuthState } from 'app/auth/firebase'
+import { useState, useEffect } from 'react'
+
 // This is sample data
 const data = {
-    user: {
-        name: 'shadcn',
-        email: 'm@example.com',
-        avatar: '/avatars/shadcn.jpg',
-    },
     navMain: [
         {
             title: 'Inbox',
@@ -134,10 +131,11 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const { user, state } = useAuthState()
     // Note: I'm using state to show active item.
     // IRL you should use the url/router.
-    const [activeItem, setActiveItem] = React.useState(data.navMain[0])
-    const [mails, setMails] = React.useState(data.mails)
+    const [activeItem, setActiveItem] = useState(data.navMain[0])
+    const [mails, setMails] = useState(data.mails)
     const { setOpen } = useSidebar()
 
     return (
@@ -151,7 +149,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             {/* This will make the sidebar appear as icons. */}
             <Sidebar
                 collapsible="none"
-                className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r"
+                className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r border-sidebar-border"
             >
                 <SidebarHeader>
                     <SidebarMenu>
@@ -223,14 +221,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarGroup>
                 </SidebarContent>
                 <SidebarFooter>
-                    <NavUser user={data.user} />
+                    <NavUser
+                        user={{
+                            name: user?.displayName ?? 'Guest',
+                            email: user?.email ?? 'guest@user.com',
+                            avatar:
+                                user?.photoURL ??
+                                `https://i.pravatar.cc/128?u=${user?.email}`,
+                        }}
+                    />
                 </SidebarFooter>
             </Sidebar>
 
             {/* This is the second sidebar */}
             {/* We disable collapsible and let it fill remaining space */}
             <Sidebar collapsible="none" className="hidden flex-1 md:flex">
-                <SidebarHeader className="gap-3.5 border-b p-4">
+                <SidebarHeader className="gap-3.5 border-b  border-sidebar-border p-4">
                     <div className="flex w-full items-center justify-between">
                         <div className="text-foreground text-base font-medium">
                             {activeItem?.title}
@@ -249,7 +255,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 <a
                                     href="#"
                                     key={mail.email}
-                                    className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0"
+                                    className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b border-sidebar-border p-4 text-sm leading-tight whitespace-nowrap last:border-b-0"
                                 >
                                     <div className="flex w-full items-center gap-2">
                                         <span>{mail.name}</span>{' '}

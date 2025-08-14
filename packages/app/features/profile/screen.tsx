@@ -399,6 +399,7 @@ export function ProfileScreen() {
                                 </Text>
                                 <View style={styles.rowSpacer} />
                                 <SidebarTabletSwitch
+                                    disabled={true}
                                     value={bigIcons ?? false}
                                     onToggle={() =>
                                         setBigIcons((prev) => !prev)

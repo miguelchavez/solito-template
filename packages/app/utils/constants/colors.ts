@@ -1,77 +1,139 @@
 /**
  * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ *
+ * Based on the tailiwind color theme from apps/next/styles/globals.css
+ *
  */
 
-const softPurpleBackground = '#F9F1FE'
-
-const tintColorLight = '#E129F1' // #E129F1 #f829ff #f0d7fc
-const tintColorDark = '#fafafa' // #6c97fa #fafafa
-const tintSecondary = '#fc2d79' //  #fc2d79 #ff0073  #ff00aa #ff005d
-const tintSecondaryDark = '#00d3da' //rgb(0, 210, 218) #ff0073  #ff00aa #ff005d
-
-const activeTabColor = '#f829ff' // #7c21fc  c616fc  #fa0255
-const activeTabBackground = '#f0d7fc' // #e8c3fa #e5b6fc #e0a9fb
-const activeTabBackgroundDark = '#e286f9' // #e286f9
-const inactiveIconColor = '#949494' // gris
-
-const textButtonColorLight = '#fff' // #f0d7fc  #e8c3fa #e5b6fc #e0a9fb
-const textButtonColorDark = '#fff' //rgb(230, 177, 255)  #e8c3fa #e5b6fc #e0a9fb
-
-const textSecondaryColorLight = '#6c97fa' // #6c97fa
-const textSecondaryColorDark = '#cacaca' // #cacaca
-
-const textTertiaryColorLight = '#2c99ff' // #2c99ff
-const textTertiaryColorDark = '#9ccfff' // #9ccfff
-
-const menuTitleColor = '#7e7e7e' // #7e7e7e
-const menuTitleColorDark = '#cfcfcf' // #cfcfcf
+const softPurpleBackground = '#e1d8fc' // #F9F1FE
+const softPurpleBackgroundDark = '#684EB5'
+const tintColorLight = '#E129F1'
+const tintColorDark = '#fafafa'
+const tintSecondary = '#fc2d79'
+const tintSecondaryDark = '#00d3da'
+const activeTabColor = '#f829ff'
+const activeTabBackground = '#f0d7fc'
+const activeTabBackgroundDark = '#e286f9'
+const inactiveIconColor = '#949494'
+const textButtonColorLight = '#fff'
+const textButtonColorDark = '#fff'
+const textSecondaryColorLight = '#6c97fa'
+const textSecondaryColorDark = '#cacaca'
+const textTertiaryColorLight = '#2c99ff'
+const textTertiaryColorDark = '#9ccfff'
+const menuTitleColor = '#7e7e7e'
+const menuTitleColorDark = '#cfcfcf'
 
 export const Colors = {
     light: {
-        primary: '#890253', // #875ef8 #f632af #f7edfe
-        secondary: '#0E7AFE', // apple blue
+        background: '#f0e9fd',
+        foreground: '#2a2a4a',
+        card: '#ffffff',
+        cardForeground: '#2a2a4a',
+        popover: '#ffffff',
+        popoverForeground: '#2a2a4a',
+        primary: '#6e56cf',
+        // primary: '#f632af',
+        primaryForeground: '#ffffff',
+        secondary: '#e4dfff',
+        // secondary: '#0E7AFE',
+        secondaryForeground: '#4a4080',
         tertiary: '#FF5A5F',
+        muted: '#f0f0fa',
+        mutedForeground: '#6c6c8a',
+        accent: '#d8e6ff',
+        accentForeground: '#2a2a4a',
+        destructive: '#ff5470',
+        destructiveForeground: '#ffffff',
+        border: '#e0e0f0',
+        input: '#e0e0f0',
+        ring: '#6e56cf',
+        chart1: '#6e56cf',
+        chart2: '#9e8cfc',
+        chart3: '#5d5fef',
+        chart4: '#7c75fa',
+        chart5: '#4740b3',
+        sidebar: '#f0f0fa',
+        sidebarForeground: '#2a2a4a',
+        sidebarPrimary: '#6e56cf',
+        sidebarPrimaryForeground: '#ffffff',
+        sidebarAccent: '#d8e6ff',
+        sidebarAccentForeground: '#2a2a4a',
+        sidebarBorder: '#e0e0f0',
+        sidebarRing: '#6e56cf',
+        loginBackground: softPurpleBackground,
+        // mios
+        tint: '#6e56cf', //tintColorLight,
+        icon: '#6e56cf',
         text: '#11181C',
-        texto: 'red', //'#11181C',
-        background: '#EAEAEA', // #D4C4F4  #FF85FF #CFB8FC #DAB8FC
-        tint: tintColorLight,
-        icon: '#d5c5ff', // #d5c5ff #687076
-        textButton: textButtonColorLight,
-        softWhite: '#FEFEFE', // #FAFAFA
+        textButton: '#fff',
+        softWhite: '#FEFEFE',
         softBackground: activeTabBackground,
-        lightBackground: '#e0a9fb', // #efb7fb  #e5b6fc #e8c3fa,
-        sidebarBackground: '#efb7fb', // #FAC3F2 #FF8B88, #FF7C78, #FF6D68, Tangerine #FA936D, Salmon #FF7F50, #FA8072,  #FD959F, #FCBBC2, #FAAACB, #FAC3F2, #E4C1F9, #d5c5ff,
+        lightBackground: '#e0a9fb',
+        sidebarBackground: '#efb7fb',
         sidebarSecondaryBackground: '#f2f2f2',
         inactiveIcon: inactiveIconColor,
         activeTabBackground: activeTabBackground,
-        tabIconDefault: '#687076', // #687076
+        tabIconDefault: '#687076',
         tabIconSelected: tintColorLight,
-        buttonColor: tintColorLight,
+        buttonColor: '#6e56cf', //tintColorLight,
         secondaryButtonColor: tintSecondary,
         secondaryTextColor: textSecondaryColorLight,
         tertiaryTextColor: textTertiaryColorLight,
         menuTitleColor: menuTitleColor,
     },
     dark: {
-        primary: '#D4C4F4',
-        secondary: '#00BFFF',
-        tertiary: '#FF5A5F',
-        text: '#ECEDEE', // #ECEDEE #FAC3F2
-        texto: 'green',
-        background: '#202020', //#202020 #323637
+        background: '#0f0f1a',
+        foreground: '#e2e2f5',
+        card: '#1a1a2e',
+        cardForeground: '#e2e2f5',
+        popover: '#1a1a2e',
+        popoverForeground: '#e2e2f5',
+        primary: '#a48fff',
+        // primary: '#D4C4F4',
+        primaryForeground: '#0f0f1a',
+        secondary: '#2d2b55',
+        // secondary: '#00BFFF',
+        secondaryForeground: '#c4c2ff',
+        // tertiary: '#FF5A5F',
+        muted: '#222244',
+        mutedForeground: '#a0a0c0',
+        accent: '#303060',
+        accentForeground: '#e2e2f5',
+        destructive: '#ff5470',
+        destructiveForeground: '#ffffff',
+        border: '#303052',
+        input: '#303052',
+        ring: '#a48fff',
+        chart1: '#a48fff',
+        chart2: '#7986cb',
+        chart3: '#64b5f6',
+        chart4: '#4db6ac',
+        chart5: '#ff79c6',
+        sidebar: '#1a1a2e',
+        sidebarForeground: '#e2e2f5',
+        sidebarPrimary: '#a48fff',
+        sidebarPrimaryForeground: '#0f0f1a',
+        sidebarAccent: '#303060',
+        sidebarAccentForeground: '#e2e2f5',
+        sidebarBorder: '#303052',
+        sidebarRing: '#a48fff',
+        loginBackground: softPurpleBackgroundDark,
+        // mios
+        text: '#ECEDEE',
         tint: tintColorDark,
-        icon: '#9BA1A6', // #9BA1A6
+        icon: '#9BA1A6',
         textButton: textButtonColorDark,
         buttonColor: tintColorDark,
-        softWhite: '#303030', // #303030
+        softWhite: '#4F4E4E', //'#303030',
         softBackground: '#2b2b2b',
-        lightBackground: '#403A3E', // #403A3E
-        sidebarBackground: '#890253', // '#87287A', //'#710062', //'#1D3D47',
+        lightBackground: '#403A3E',
+        sidebarBackground: '#890253',
         sidebarSecondaryBackground: '#f7e3fc',
         inactiveIcon: inactiveIconColor,
         activeTabBackground: activeTabBackgroundDark,
-        tabIconDefault: '#9BA1A6', // #9BA1A6
+        tabIconDefault: '#9BA1A6',
         tabIconSelected: tintColorDark,
         secondaryButtonColor: tintSecondaryDark,
         secondaryTextColor: textSecondaryColorDark,
