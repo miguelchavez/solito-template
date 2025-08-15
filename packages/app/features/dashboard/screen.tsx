@@ -49,7 +49,6 @@ export function HomeScreen() {
         <View
             style={{
                 flex: 1,
-                padding: 16,
                 gap: 32,
                 // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
                 width: '100%', // '100dvw', //'100vw',
@@ -61,7 +60,7 @@ export function HomeScreen() {
         >
             <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
             <View>
-                <Text style={{ color: textColor, fontSize: 30 }}>
+                <Text style={{ color: textColor }}>
                     Your last session is from {timeAgo}
                 </Text>
                 <Text style={{ color: textColor }}>

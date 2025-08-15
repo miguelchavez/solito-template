@@ -204,7 +204,6 @@ export function ProfileScreen() {
                 flex: 1,
                 width: '100%', // '100dvw', //'100vw',   No esta aceotando 'dvw' como unidad!
                 height: '100%', // '100dvh', //'100vh',
-                padding: 14,
                 paddingLeft: 24,
                 paddingRight: 24,
                 gap: 8,
@@ -218,15 +217,13 @@ export function ProfileScreen() {
             <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
                 <View
                     style={{
-                        paddingVertical: 12,
-                        paddingTop: 4,
+                        paddingVertical: 6,
                     }}
                 >
                     <Text
                         style={[
                             styles.sectionTitle,
                             {
-                                margin: 8,
                                 marginLeft: 12,
                                 fontSize: 13,
                                 fontWeight: '400',
@@ -375,7 +372,8 @@ export function ProfileScreen() {
                                 />
                             </TouchableOpacity>
                         </View>
-                        <View
+                        {/* Do not show small sidebar switch on web */}
+                        {/* <View
                             style={{
                                 paddingLeft: 16,
                                 // backgroundColor: '#fff',
@@ -406,7 +404,7 @@ export function ProfileScreen() {
                                     }
                                 />
                             </View>
-                        </View>
+                        </View> */}
                         <View
                             style={{
                                 paddingLeft: 16,

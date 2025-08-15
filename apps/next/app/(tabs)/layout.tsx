@@ -54,15 +54,7 @@ export default function TabsLayout({
                         </BreadcrumbList>
                     </Breadcrumb>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4">
-                    {children}
-                    {Array.from({ length: 14 }).map((_, index) => (
-                        <div
-                            key={index}
-                            className="bg-muted aspect-video h-12 w-full rounded-lg"
-                        />
-                    ))}
-                </div>
+                <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
             </SidebarInset>
         </SidebarProvider>
     )

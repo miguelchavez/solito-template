@@ -17,7 +17,6 @@ export function DocumentsScreen() {
                 flex: 1,
                 width: '100dvw', //'100vw',
                 height: '100dvh', //'100vh',
-                padding: 16,
                 gap: 32,
                 // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
                 backgroundColor: bgColor, // Added background color
