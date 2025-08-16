@@ -50,11 +50,7 @@ export function HomeScreen() {
             style={{
                 flex: 1,
                 gap: 32,
-                // paddingTop: width > height ? 32 : 16, // fix para el stack header en horizontal
-                width: '100%', // '100dvw', //'100vw',
-                height: '100%', // '100dvh', //'100vh',
                 flexDirection: 'column',
-                backgroundColor: bgColor,
             }}
             className="w-3/4 h-3/4"
         >
