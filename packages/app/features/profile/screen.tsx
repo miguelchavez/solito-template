@@ -22,8 +22,6 @@ import { useTheme } from 'next-themes'
 import { useContext } from 'react'
 import { SettingsContext } from 'app/providers/settingsContextProvider'
 
-import SidebarTabletSwitch from 'app/components/sidebarTabletSwitch'
-
 import { enUS, es } from 'date-fns/locale'
 import {
     format,
@@ -202,104 +200,89 @@ export function ProfileScreen() {
         <View
             style={{
                 flex: 1,
-                width: '100%', // '100dvw', //'100vw',   No esta aceotando 'dvw' como unidad!
-                height: '100%', // '100dvh', //'100vh',
-                paddingLeft: 24,
-                paddingRight: 24,
                 gap: 8,
-                backgroundColor: bgColor, // Added background color
-
-                // alignItems: 'center',
-                // justifyContent: 'center',
-                // flexDirection: 'row',
             }}
         >
             <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
-                <View
-                    style={{
-                        paddingVertical: 6,
-                    }}
+                <Text
+                    style={[
+                        styles.sectionTitle,
+                        {
+                            marginLeft: 12,
+                            fontSize: 13,
+                            fontWeight: '400',
+                            color: menuTitle,
+                        },
+                    ]}
                 >
-                    <Text
+                    Account
+                </Text>
+                <View style={styles.sectionBody}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            // handle onPress
+                        }}
                         style={[
-                            styles.sectionTitle,
+                            styles.profile,
                             {
-                                marginLeft: 12,
-                                fontSize: 13,
-                                fontWeight: '400',
-                                color: menuTitle,
+                                padding: 12,
+                                marginTop: 10,
+                                backgroundColor: softWhite,
                             },
                         ]}
                     >
-                        Account
-                    </Text>
-                    <View style={styles.sectionBody}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                // handle onPress
+                        <Image
+                            alt={user?.displayName ?? 'Guest User'}
+                            source={{
+                                uri:
+                                    user?.photoURL ??
+                                    'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
                             }}
-                            style={[
-                                styles.profile,
-                                {
-                                    padding: 12,
-                                    marginTop: 10,
-                                    backgroundColor: softWhite,
-                                },
-                            ]}
-                        >
-                            <Image
-                                alt={user?.displayName ?? 'Guest User'}
-                                source={{
-                                    uri:
-                                        user?.photoURL ??
-                                        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
+                            style={styles.profileAvatar}
+                        />
+                        <View style={styles.profileBody}>
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: '600',
+                                    color: textColor,
                                 }}
-                                style={styles.profileAvatar}
-                            />
-                            <View style={styles.profileBody}>
-                                <Text
-                                    style={{
-                                        fontSize: 18,
-                                        fontWeight: '600',
-                                        color: textColor,
-                                    }}
-                                >
-                                    {user?.isAnonymous
-                                        ? 'Guest'
-                                        : user?.displayName}
-                                </Text>
-                                <Text
-                                    style={[
-                                        styles.profileHandle,
-                                        {
-                                            color: textSecondaryColor,
-                                            marginTop: 2,
-                                        },
-                                    ]}
-                                >
-                                    {user?.email ?? 'guest@user.com'}
-                                </Text>
-                                <Text
-                                    style={[
-                                        styles.profileDetail,
-                                        {
-                                            color: menuTitle,
-                                            fontSize: 14,
-                                            fontWeight: '300',
-                                        },
-                                    ]}
-                                >
-                                    Signed in {timeAgo}
-                                </Text>
-                            </View>
-                            <Icono
-                                size={22}
-                                sfName="chevron.right"
-                                DIName="chevron-right"
-                                tintColor={menuTitle}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                            >
+                                {user?.isAnonymous
+                                    ? 'Guest'
+                                    : user?.displayName}
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.profileHandle,
+                                    {
+                                        color: textSecondaryColor,
+                                        marginTop: 2,
+                                    },
+                                ]}
+                            >
+                                {user?.email ?? 'guest@user.com'}
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.profileDetail,
+                                    {
+                                        color: menuTitle,
+                                        fontSize: 14,
+                                        fontWeight: '300',
+                                    },
+                                ]}
+                            >
+                                Signed in {timeAgo}
+                            </Text>
+                        </View>
+                        <Icono
+                            size={22}
+                            sfName="chevron.right"
+                            DIName="chevron-right"
+                            tintColor={menuTitle}
+                        />
+                    </TouchableOpacity>
                 </View>
                 <View style={{ paddingVertical: 12, paddingTop: 4 }}>
                     <Text
@@ -373,43 +356,10 @@ export function ProfileScreen() {
                             </TouchableOpacity>
                         </View>
                         {/* Do not show small sidebar switch on web */}
-                        {/* <View
-                            style={{
-                                paddingLeft: 16,
-                                // backgroundColor: '#fff',
-                                borderColor: softWhite, //'#f0f0f0',
-                                borderTopWidth: 1,
-                            }}
-                        >
-                            <View
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
-                            >
-                                <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
-                                >
-                                    Small Sidebar on tablets
-                                </Text>
-                                <View style={styles.rowSpacer} />
-                                <SidebarTabletSwitch
-                                    disabled={true}
-                                    value={bigIcons ?? false}
-                                    onToggle={() =>
-                                        setBigIcons((prev) => !prev)
-                                    }
-                                />
-                            </View>
-                        </View> */}
                         <View
                             style={{
                                 paddingLeft: 16,
-                                // backgroundColor: '#fff',
-                                borderColor: softWhite, //'#f0f0f0',
+                                borderColor: softWhite,
                                 borderTopWidth: 1,
                             }}
                         >
@@ -452,8 +402,7 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                // backgroundColor: '#fff',
-                                borderColor: softWhite, // '#f0f0f0',
+                                borderColor: softWhite,
                                 borderTopWidth: 1,
                             }}
                         >
@@ -496,8 +445,7 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                // backgroundColor: '#fff',
-                                borderColor: softWhite, //'#f0f0f0',
+                                borderColor: softWhite,
                                 borderTopWidth: 1,
                             }}
                         >
@@ -534,8 +482,7 @@ export function ProfileScreen() {
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    // backgroundColor: '#fff',
-                                    borderColor: softWhite, //'#f0f0f0',
+                                    borderColor: softWhite,
                                     borderTopWidth: 1,
                                 },
                                 styles.rowLast,
@@ -597,8 +544,7 @@ export function ProfileScreen() {
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    // backgroundColor: '#fff',
-                                    borderColor: softWhite, //'#f0f0f0',
+                                    borderColor: softWhite,
                                     borderTopWidth: 1,
                                 },
                                 styles.rowFirst,
@@ -633,8 +579,7 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                // backgroundColor: '#fff',
-                                borderColor: softWhite, //'#f0f0f0',
+                                borderColor: softWhite,
                                 borderTopWidth: 1,
                             }}
                         >
@@ -668,8 +613,7 @@ export function ProfileScreen() {
                         <View
                             style={{
                                 paddingLeft: 16,
-                                // backgroundColor: '#fff',
-                                borderColor: softWhite, //'#f0f0f0',
+                                borderColor: softWhite,
                                 borderTopWidth: 1,
                             }}
                         >
@@ -704,8 +648,7 @@ export function ProfileScreen() {
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    // backgroundColor: '#fff',
-                                    borderColor: softWhite, //'#f0f0f0',
+                                    borderColor: softWhite,
                                     borderTopWidth: 1,
                                 },
                                 styles.rowLast,
@@ -750,8 +693,7 @@ export function ProfileScreen() {
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    // backgroundColor: '#fff',
-                                    borderColor: softWhite, //'#f0f0f0',
+                                    borderColor: softWhite,
                                     borderTopWidth: 1,
                                 },
                                 styles.rowFirst,
