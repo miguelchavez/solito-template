@@ -19,7 +19,7 @@ export default function Profile() {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: bgColor }}>
+        <View style={{ flex: 1, backgroundColor: bgColor, padding: 2 }}>
             <ProfileScreen />
         </View>
     )

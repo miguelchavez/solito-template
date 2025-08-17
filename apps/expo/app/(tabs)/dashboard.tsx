@@ -32,7 +32,7 @@ export default function Home() {
     // }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, padding: 2 }}>
             <HomeScreen />
         </SafeAreaView>
     )

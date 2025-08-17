@@ -16,7 +16,7 @@ export default function Screen() {
     // }
 
     return (
-        <View style={{ flex: 1, backgroundColor: bgColor }}>
+        <View style={{ flex: 1, backgroundColor: bgColor, padding: 2 }}>
             <DocumentsScreen />
         </View>
     )

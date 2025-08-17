@@ -309,8 +309,7 @@ export function ProfileScreen() {
                             style={[
                                 {
                                     paddingLeft: 16,
-                                    // backgroundColor: '#fff',
-                                    borderColor: softWhite, //'#f0f0f0',
+                                    borderColor: softWhite,
                                     borderTopWidth: 1,
                                 },
                                 styles.rowFirst,

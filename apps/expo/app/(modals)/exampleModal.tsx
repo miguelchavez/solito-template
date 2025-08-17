@@ -10,29 +10,26 @@ const ExampleModal = () => {
     const router = useRouter()
     const bgColor = useThemeColor('background')
     const textColor = useThemeColor('text')
-    const linkColor = useThemeColor('tertiary')
-
-    /**
-     * Styles for the ExampleModal component.
-     */
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: bgColor,
-            color: textColor,
-        },
-        text: {
-            fontSize: 20,
-            marginBottom: 20,
-            color: textColor,
-        },
-    })
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>This is a modal page</Text>
+        <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: bgColor,
+                padding: 2,
+            }}
+        >
+            <Text
+                style={{
+                    fontSize: 20,
+                    marginBottom: 20,
+                    color: textColor,
+                }}
+            >
+                This is a modal page
+            </Text>
             <Button title="Close Modal" onPress={() => router.back()} />
         </View>
     )

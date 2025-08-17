@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { getCurrentUser } from 'app/auth/firebase'
 // import { View } from 'react-native'
 // import { MotiLink } from 'solito/moti/app'
-import { HomeScreen } from 'app/features/home/screen'
+import { HomeScreen } from 'app/features/dashboard/screen'
 
 const Home = () => {
     const user = getCurrentUser()
@@ -28,7 +28,7 @@ const Home = () => {
     }
 
     return (
-        <div className="m-8 p-8 flex-1 text-2xl bg-rose-100 rounded-lg">
+        <div className="p-2 flex-1 text-2xl bg-rose-100 rounded-lg">
             <HomeScreen />
         </div>
     )
