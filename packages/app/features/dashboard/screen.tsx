@@ -3,23 +3,20 @@
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti/app'
 import { Text, View, Platform, useWindowDimensions } from 'react-native'
-
-import { MyButton } from 'app/components/buttons'
-
 import { useState, useEffect } from 'react'
 import { useAuthState } from 'app/auth/firebase'
 import { useRouter } from 'solito/navigation'
-
-import { useThemeColor } from '@hooks/useThemeColor'
-
 import { enUS, es } from 'date-fns/locale'
 import { formatDistanceToNow } from 'date-fns'
+
+import { useThemeColor } from '@hooks/useThemeColor'
+import { MyButton } from 'app/components/buttons'
+import { P, H1, H2 } from 'app/components/typography'
 
 export function HomeScreen() {
     const { user, state } = useAuthState()
     const router = useRouter()
     const { width, height } = useWindowDimensions()
-    const bgColor = useThemeColor('background')
     const linkColor = useThemeColor('primary')
     const textColor = useThemeColor('text')
 
@@ -52,7 +49,6 @@ export function HomeScreen() {
                 gap: 32,
                 flexDirection: 'column',
             }}
-            className="w-3/4 h-3/4"
         >
             <H1>Welcome {user?.isAnonymous ? 'Guest' : user?.displayName}</H1>
             <View>
@@ -107,52 +103,5 @@ export function HomeScreen() {
                 />
             </View>
         </View>
-    )
-}
-
-const H1 = ({ children }: { children: React.ReactNode }) => {
-    const textColor = useThemeColor('text')
-    return (
-        <Text
-            style={{
-                fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
-                fontWeight: 'bold',
-                color: textColor,
-                textAlign: 'center',
-                fontSize: 26,
-            }}
-        >
-            {children}
-        </Text>
-    )
-}
-
-const P = ({
-    children,
-    style,
-    selectable,
-    props,
-}: {
-    children: React.ReactNode
-    props?: any
-    style?: any
-    selectable?: boolean
-}) => {
-    const textColor = useThemeColor('text') // default text color
-    console.log(`Style for ${children} :`, style, 'themeColor TEXT:', textColor)
-    return (
-        <Text
-            selectable={selectable}
-            style={{
-                color: textColor,
-                fontSize: 18,
-                fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
-                textAlign: 'justify',
-                // ...style, // override style passed in props
-            }}
-            {...props}
-        >
-            {children}
-        </Text>
     )
 }

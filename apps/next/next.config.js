@@ -66,6 +66,7 @@ const withTurpopack = {
  * @type {import('next').NextConfig}
  */
 module.exports = {
+    // devIndicators: false,
     images: {},
     transpilePackages: [
         'react-native',

@@ -15,9 +15,9 @@ import { BlurView } from 'expo-blur'
 const _layout = () => {
     const { height, width } = useWindowDimensions()
     const { settings, updateSettings } = useContext(SettingsContext)
-    const activeColor = useThemeColor('primaryForeground') // tint //'#f829ff' // '#7c21fc' '#c616fc' '#fa0255'
+    const activeColor = useThemeColor('primaryForeground')
     const inactiveColor = useThemeColor('inactiveIcon')
-    const activeBackground = useThemeColor('primary') // activeTabBackground
+    const activeBackground = useThemeColor('primary')
     const [tabBarSettings, setTabBarSettings] = useState({
         position: 'left',
         variant: 'uikit',

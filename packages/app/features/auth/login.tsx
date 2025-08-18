@@ -29,10 +29,6 @@ export default function LoginScreen() {
     const auth = useFirebaseAuth()
     const router = useRouter()
     const { height, width } = useWindowDimensions()
-    // const bgColor = useThemeColor('background')
-    // const bgSidebarColor = useThemeColor('sidebarBackground')
-    // const bgLightBackground = useThemeColor('lightBackground')
-    // const bgSoftWhiteColor = useThemeColor('softWhite')
 
     const bgColor = useThemeColor('loginBackground')
     const softWhite = useThemeColor('softWhite')

@@ -34,7 +34,7 @@ export default function TabsLayout({
         >
             <AppSidebar />
             <SidebarInset className="overflow-x-hidden">
-                <header className="sticky z-1 top-0 flex shrink-0 items-center gap-2 border-b  border-header bg-header-main/70  backdrop-blur-sm p-4">
+                <header className="sticky z-1 top-0 flex shrink-0 items-center gap-2 border-b  border-header bg-header-main/70  backdrop-blur-xs p-4">
                     <SidebarTrigger className="-ml-1" />
                     <Separator
                         orientation="vertical"

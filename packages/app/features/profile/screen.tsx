@@ -1,7 +1,8 @@
 'use client'
 
 import { useRouter } from 'solito/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { useTheme } from 'next-themes'
 import {
     StyleSheet,
     View,
@@ -11,18 +12,17 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
+    Platform,
 } from 'react-native'
+import { enUS, es } from 'date-fns/locale'
+
 import Icono from 'app/components/icons'
+// import { P, H1, H2 } from 'app/components/typography'
 import { signOut } from 'app/auth/firebase'
 import { useAuthState } from 'app/auth/firebase'
-
 import { useThemeColor } from '@hooks/useThemeColor'
-import { useTheme } from 'next-themes'
-
-import { useContext } from 'react'
 import { SettingsContext } from 'app/providers/settingsContextProvider'
 
-import { enUS, es } from 'date-fns/locale'
 import {
     format,
     formatDistanceToNow,
@@ -37,9 +37,6 @@ export function ProfileScreen() {
     const { user, state } = useAuthState()
     const { settings, updateSettings } = useContext(SettingsContext)
     const menuTitle = useThemeColor('menuTitleColor')
-    const bgColor = useThemeColor('background')
-    const softBgColor = useThemeColor('softBackground')
-    const lightBgColor = useThemeColor('lightBackground')
     const textColor = useThemeColor('text')
     const textSecondaryColor = useThemeColor('secondaryTextColor')
     const textTertiaryColor = useThemeColor('tertiaryTextColor')
@@ -47,24 +44,6 @@ export function ProfileScreen() {
     const { width, height } = useWindowDimensions()
 
     const styles = StyleSheet.create({
-        card: {
-            padding: 10,
-            paddingLeft: 18,
-            backgroundColor: softWhite,
-            borderRadius: 10,
-        },
-
-        subtitle: {
-            color: textTertiaryColor,
-            fontSize: 16,
-            fontWeight: 'normal',
-        },
-        description: {
-            color: menuTitle,
-            fontSize: 14,
-            fontWeight: '300',
-            width: '100%',
-        },
         /** Content */
         contentFooter: {
             marginTop: 24,
@@ -73,9 +52,6 @@ export function ProfileScreen() {
             textAlign: 'center',
         },
         /** Section */
-        section: {
-            paddingVertical: 12,
-        },
         sectionTitle: {
             letterSpacing: 0.33,
             textTransform: 'uppercase',
@@ -108,7 +84,6 @@ export function ProfileScreen() {
             marginRight: 'auto',
         },
         profileHandle: {
-            fontSize: 16,
             fontWeight: '400',
         },
         profileDetail: {
@@ -117,7 +92,7 @@ export function ProfileScreen() {
         },
         /** Row */
         row: {
-            height: 44,
+            // height: 44,
             width: '100%',
             flexDirection: 'row',
             alignItems: 'center',
@@ -196,24 +171,31 @@ export function ProfileScreen() {
         }
     }, [])
 
+    const PStyle = {
+        fontFamily: Platform.OS === 'web' ? 'SilkaRegular' : 'Inter',
+        fontSize: 13,
+        color: textColor,
+    }
+
     return (
         <View
             style={{
                 flex: 1,
                 gap: 8,
+                // maxWidth: '60%',
+                minWidth: '50%',
+                margin: 'auto',
             }}
         >
             <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
                 <Text
-                    style={[
-                        styles.sectionTitle,
-                        {
-                            marginLeft: 12,
-                            fontSize: 13,
-                            fontWeight: '400',
-                            color: menuTitle,
-                        },
-                    ]}
+                    style={{
+                        ...styles.sectionTitle,
+                        ...PStyle,
+                        marginLeft: 12,
+                        fontWeight: '400',
+                        color: menuTitle,
+                    }}
                 >
                     Account
                 </Text>
@@ -222,14 +204,12 @@ export function ProfileScreen() {
                         onPress={() => {
                             // handle onPress
                         }}
-                        style={[
-                            styles.profile,
-                            {
-                                padding: 12,
-                                marginTop: 10,
-                                backgroundColor: softWhite,
-                            },
-                        ]}
+                        style={{
+                            ...styles.profile,
+                            padding: 12,
+                            marginTop: 10,
+                            backgroundColor: softWhite,
+                        }}
                     >
                         <Image
                             alt={user?.displayName ?? 'Guest User'}
@@ -243,9 +223,9 @@ export function ProfileScreen() {
                         <View style={styles.profileBody}>
                             <Text
                                 style={{
-                                    fontSize: 18,
+                                    ...PStyle,
+                                    fontSize: 15,
                                     fontWeight: '600',
-                                    color: textColor,
                                 }}
                             >
                                 {user?.isAnonymous
@@ -253,29 +233,25 @@ export function ProfileScreen() {
                                     : user?.displayName}
                             </Text>
                             <Text
-                                style={[
-                                    styles.profileHandle,
-                                    {
-                                        color: textSecondaryColor,
-                                        marginTop: 2,
-                                    },
-                                ]}
+                                style={{
+                                    ...styles.profileHandle,
+                                    color: textSecondaryColor,
+                                }}
                             >
                                 {user?.email ?? 'guest@user.com'}
                             </Text>
                             <Text
-                                style={[
-                                    styles.profileDetail,
-                                    {
-                                        color: menuTitle,
-                                        fontSize: 14,
-                                        fontWeight: '300',
-                                    },
-                                ]}
+                                style={{
+                                    ...PStyle,
+                                    ...styles.profileDetail,
+                                    color: menuTitle,
+                                    fontWeight: '300',
+                                }}
                             >
                                 Signed in {timeAgo}
                             </Text>
                         </View>
+                        <View style={styles.rowSpacer} />
                         <Icono
                             size={22}
                             sfName="chevron.right"
@@ -286,62 +262,57 @@ export function ProfileScreen() {
                 </View>
                 <View style={{ paddingVertical: 12, paddingTop: 4 }}>
                     <Text
-                        style={[
-                            styles.sectionTitle,
-                            {
-                                margin: 8,
-                                marginLeft: 12,
-                                fontSize: 13,
-                                fontWeight: '400',
-                                color: menuTitle,
-                            },
-                        ]}
+                        style={{
+                            ...PStyle,
+                            ...styles.sectionTitle,
+                            margin: 8,
+                            marginLeft: 12,
+                            fontWeight: '400',
+                            color: menuTitle,
+                        }}
                     >
                         Preferences
                     </Text>
                     <View
-                        style={[
-                            styles.sectionBody,
-                            { backgroundColor: softWhite },
-                        ]}
+                        style={{
+                            ...styles.sectionBody,
+                            backgroundColor: softWhite,
+                        }}
                     >
                         <View
-                            style={[
-                                {
-                                    paddingLeft: 16,
-                                    borderColor: softWhite,
-                                    borderTopWidth: 1,
-                                },
-                                styles.rowFirst,
-                            ]}
+                            style={{
+                                ...styles.rowFirst,
+                                paddingLeft: 16,
+                                borderColor: softWhite,
+                                borderTopWidth: 1,
+                            }}
                         >
                             <TouchableOpacity
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                    }}
                                 >
                                     Language
                                 </Text>
                                 <View style={styles.rowSpacer} />
                                 <Text
-                                    style={[
-                                        { marginRight: 4 },
-                                        {
-                                            color: menuTitle,
-                                            fontSize: 16,
-                                            fontWeight: '500',
-                                        },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        marginRight: 4,
+                                        color: menuTitle,
+                                        fontWeight: '500',
+                                    }}
                                 >
                                     English
                                 </Text>
@@ -350,7 +321,6 @@ export function ProfileScreen() {
                                     sfName="chevron.right"
                                     DIName="chevron-right"
                                     tintColor={menuTitle}
-                                    // color="#bcbcbc"
                                 />
                             </TouchableOpacity>
                         </View>
@@ -363,16 +333,17 @@ export function ProfileScreen() {
                             }}
                         >
                             <View
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                    }}
                                 >
                                     System Settings for Dark Mode
                                 </Text>
@@ -406,16 +377,17 @@ export function ProfileScreen() {
                             }}
                         >
                             <View
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                    }}
                                 >
                                     Force Dark mode
                                 </Text>
@@ -449,16 +421,18 @@ export function ProfileScreen() {
                             }}
                         >
                             <View
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                        color: textColor,
+                                    }}
                                 >
                                     Email Notifications
                                 </Text>
@@ -478,26 +452,26 @@ export function ProfileScreen() {
                             </View>
                         </View>
                         <View
-                            style={[
-                                {
-                                    paddingLeft: 16,
-                                    borderColor: softWhite,
-                                    borderTopWidth: 1,
-                                },
-                                styles.rowLast,
-                            ]}
+                            style={{
+                                ...styles.rowLast,
+                                paddingLeft: 16,
+                                borderColor: softWhite,
+                                borderTopWidth: 1,
+                            }}
                         >
                             <View
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                        color: textColor,
+                                    }}
                                 >
                                     Push Notifications
                                 </Text>
@@ -520,49 +494,47 @@ export function ProfileScreen() {
                 </View>
                 <View style={{ paddingVertical: 12, paddingTop: 4 }}>
                     <Text
-                        style={[
-                            styles.sectionTitle,
-                            {
-                                margin: 8,
-                                marginLeft: 12,
-                                fontSize: 13,
-                                fontWeight: '400',
-                                color: menuTitle,
-                            },
-                        ]}
+                        style={{
+                            ...PStyle,
+                            ...styles.sectionTitle,
+                            margin: 8,
+                            marginLeft: 12,
+                            fontSize: 13,
+                            fontWeight: '400',
+                            color: menuTitle,
+                        }}
                     >
                         Resources
                     </Text>
                     <View
-                        style={[
-                            styles.sectionBody,
-                            { backgroundColor: softWhite },
-                        ]}
+                        style={{
+                            ...styles.sectionBody,
+                            backgroundColor: softWhite,
+                        }}
                     >
                         <View
-                            style={[
-                                {
-                                    paddingLeft: 16,
-                                    borderColor: softWhite,
-                                    borderTopWidth: 1,
-                                },
-                                styles.rowFirst,
-                            ]}
+                            style={{
+                                ...styles.rowFirst,
+                                paddingLeft: 16,
+                                borderColor: softWhite,
+                                borderTopWidth: 1,
+                            }}
                         >
                             <TouchableOpacity
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                    }}
                                 >
                                     Contact Us
                                 </Text>
@@ -586,16 +558,17 @@ export function ProfileScreen() {
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor, fontSize: 16 },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                    }}
                                 >
                                     Report Bug
                                 </Text>
@@ -605,68 +578,32 @@ export function ProfileScreen() {
                                     sfName="chevron.right"
                                     DIName="chevron-right"
                                     tintColor={menuTitle}
-                                    // color="#bcbcbc"
                                 />
                             </TouchableOpacity>
                         </View>
                         <View
                             style={{
+                                ...styles.rowLast,
                                 paddingLeft: 16,
-                                borderColor: softWhite,
                                 borderTopWidth: 1,
+                                borderColor: softWhite,
                             }}
                         >
                             <TouchableOpacity
                                 onPress={() => {
                                     // handle onPress
                                 }}
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
-                            >
-                                <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor },
-                                    ]}
-                                >
-                                    Rate in App Store
-                                </Text>
-                                <View style={styles.rowSpacer} />
-                                <Icono
-                                    size={19}
-                                    sfName="chevron.right"
-                                    DIName="chevron-right"
-                                    tintColor={menuTitle}
-                                    // color="#bcbcbc"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <View
-                            style={[
-                                {
-                                    paddingLeft: 16,
-                                    borderColor: softWhite,
-                                    borderTopWidth: 1,
-                                },
-                                styles.rowLast,
-                            ]}
-                        >
-                            <TouchableOpacity
-                                onPress={() => {
-                                    // handle onPress
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
                                 }}
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        { color: textColor },
-                                    ]}
+                                    style={{
+                                        ...PStyle,
+                                        ...styles.rowLabel,
+                                    }}
                                 >
                                     Terms and Privacy
                                 </Text>
@@ -683,43 +620,40 @@ export function ProfileScreen() {
                 </View>
                 <View style={{ paddingVertical: 12, paddingTop: 4 }}>
                     <View
-                        style={[
-                            styles.sectionBody,
-                            { backgroundColor: softWhite },
-                        ]}
+                        style={{
+                            ...styles.sectionBody,
+                            backgroundColor: softWhite,
+                        }}
                     >
                         <View
-                            style={[
-                                {
-                                    paddingLeft: 16,
-                                    borderColor: softWhite,
-                                    borderTopWidth: 1,
-                                },
-                                styles.rowFirst,
-                                styles.rowLast,
-                                { alignItems: 'center' },
-                            ]}
+                            style={{
+                                paddingLeft: 16,
+                                borderColor: softWhite,
+                                borderTopWidth: 1,
+                                ...styles.rowFirst,
+                                ...styles.rowLast,
+                                alignItems: 'center',
+                            }}
                         >
                             <TouchableOpacity
                                 onPress={() => {
                                     signOut()
                                 }}
-                                style={[
-                                    styles.row,
-                                    { paddingRight: 12, paddingVertical: 12 },
-                                ]}
+                                style={{
+                                    ...styles.row,
+                                    paddingRight: 12,
+                                    paddingVertical: 12,
+                                }}
                             >
                                 <Text
-                                    style={[
-                                        styles.rowLabel,
-                                        {
-                                            color: textTertiaryColor,
-                                            fontWeight: '700',
-                                            textAlign: 'center',
-                                            alignContent: 'center',
-                                            width: '100%',
-                                        },
-                                    ]}
+                                    style={{
+                                        ...styles.rowLabel,
+                                        color: textTertiaryColor,
+                                        fontWeight: '700',
+                                        textAlign: 'center',
+                                        alignContent: 'center',
+                                        width: '100%',
+                                    }}
                                 >
                                     Log Out
                                 </Text>
@@ -727,88 +661,10 @@ export function ProfileScreen() {
                         </View>
                     </View>
                 </View>
-                <Text style={[styles.contentFooter, { color: menuTitle }]}>
+                <Text style={{ ...styles.contentFooter, color: menuTitle }}>
                     Solito Template
                 </Text>
             </ScrollView>
         </View>
-    )
-}
-
-const H1 = ({
-    children,
-    style,
-}: {
-    children: React.ReactNode
-    style?: any
-}) => {
-    const textColor = useThemeColor('text')
-    return (
-        <Text
-            style={{
-                color: textColor,
-                textAlign: 'center',
-                fontFamily: 'Inter',
-                fontWeight: '800',
-                fontSize: 26,
-                ...style,
-            }}
-        >
-            {children}
-        </Text>
-    )
-}
-
-const H2 = ({
-    children,
-    style,
-}: {
-    children: React.ReactNode
-    style?: any
-}) => {
-    const textColor = useThemeColor('text')
-    return (
-        <Text
-            style={{
-                color: textColor,
-                textAlign: 'center',
-                fontFamily: 'Inter',
-                fontWeight: '600',
-                fontSize: 20,
-                ...style,
-            }}
-        >
-            {children}
-        </Text>
-    )
-}
-
-const P = ({
-    children,
-    style,
-    selectable,
-    props,
-}: {
-    children: React.ReactNode
-    props?: any
-    style?: any
-    selectable?: boolean
-}) => {
-    const textColor = useThemeColor('text')
-    const linkColor = useThemeColor('secondary')
-    return (
-        <Text
-            selectable={selectable}
-            style={{
-                fontFamily: 'Inter',
-                textAlign: 'justify',
-                color: selectable ? linkColor : textColor,
-                fontSize: 18,
-                ...style,
-            }}
-            {...props}
-        >
-            {children}
-        </Text>
     )
 }
